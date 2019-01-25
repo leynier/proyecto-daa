@@ -9,9 +9,13 @@
 \usepackage{anyfontsize}
 \usepackage[spanish]{babel}
 \usepackage{listings}
+\usepackage{latexsym}
 
 \usepackage{epstopdf}
 \DeclareGraphicsExtensions{.pdf,.png,.jpg,.gif,.eps}
+
+\newcommand{\proof}{\textbf{Demostración:} }
+\newcommand{\nl}{\vspace{0.3cm}}
 
 \newcommand{\ct}{árbol cartesiano }
 \newcommand{\rmp}{camino más a la derecha }
@@ -19,13 +23,8 @@
 \newtheorem{theorem}{Teorema}
 \newtheorem{lemma}{Lema}
 \newtheorem{definition}{Definición}
-\newtheorem{proof}{Demostración}
-\newtheorem{prooflemma}{Demostración Lema}
 \newtheorem{propertie}{Propiedad}
-\newtheorem{note}{Nota}
 \newtheorem{observation}{Observación}
-\newtheorem{notation}{Notación}
-\newtheorem{code}{Código}
 
 %opening
 \title{Proyecto de Diseño y Análisis de Algoritmos\\ \vspace{.2cm} \textbf{Árbol Cartesiano}}
@@ -35,9 +34,33 @@
 
 \maketitle
 
+\vspace{0.5cm}
+
+\begin{center}
+	\vspace{0.2cm}
+	\includegraphics[width=2.5cm]{images/escudo.png}\\
+	\vspace{0.2cm}
+	Facultad de Matemática y Computación\\
+	\vspace{0.1cm}
+	Universidad de La Habana\\
+	\vspace{1cm}
+\end{center}
+
+\vspace{1cm}
+
+\begin{abstract}
+	
+\end{abstract}
+
+\newpage
+
+\tableofcontents
+
 \newpage
 
 \section{¿Qué es un Árbol Cartesiano?}
+
+\nl
 
 \begin{definition}
 	Un \textbf{\ct}(Cartesian Tree) es un árbol binario derivado de una secuencia de números.
@@ -50,31 +73,26 @@
 		\item \begin{propertie} El recorrido en entre orden del árbol debe retornar la secuencia original. \end{propertie}
 		\item \begin{propertie} El árbol cumple con la propiedad del montículo. \end{propertie}
 	\end{itemize}
-	\begin{proof}
-		Por inducción fuerte en la cantidad de números de la secuencia.
-		\begin{itemize}
-			\item \textbf{Case base:} Para $n = 1$ el \ct es único ya que contiene un solo nodo.
-			\item \textbf{Hipótesis:} Si para toda secuencia de tamaño $m < n$ se cumple que el \ct derivado de ella es único entonces para toda secuencia de números de tamaño $n$ se cumple que el \ct derivado de ella es único.
-			\item Por a la \textbf{Propiedad 1} existe una bisección entre los elementos de la secuencia y los nodos del árbol.
-			\item Por a la \textbf{Propiedad 3} la raíz del árbol tiene que ser el elemento de menor valor en la secuencia. Sea $k$ la posición del elemento en la secuencia.
-			\item Por a la \textbf{Propiedad 2} el subárbol resultante de tomar el hijo izquierdo de la raíz es el \ct de la secuencia desde $1$ hasta $k - 1$. Si la raíz no tuviera hijo izquierdo es porque $k = 1$. Luego por hipótesis de inducción este subárbol cartesiano es único para la secuencia desde $1$ hasta $k - 1$.
-			\item Por a la \textbf{Propiedad 2} el subárbol resultante de tomar el hijo derecho de la raíz es el \ct de la secuencia desde $k + 1$ hasta $n$. Si la raíz no tuviera hijo derecho es porque $k = n$. Luego por hipótesis de inducción este subárbol cartesiano es único para la secuencia desde $k + 1$ hasta $n$.
-			\item Finalmente, como el subárbol izquierdo y el subárbol derecho resultantes de los hijos izquierdo y derecho de la raíz del árbol son únicos para sus respectivas secuencias entonces el árbol completo es único para la secuencia de $1$ hasta $n$. 
-		\end{itemize}
-	\end{proof}
 \end{theorem}
 
-\begin{note}
-	Si una secuencia contiene números repetidos, el \ct se puede definir determinando una regla de desempate (por ejemplo, determinando que el primer número repetido sea tratado como menor que su homólogo en la secuencia) antes de aplicar las propiedades anteriores.
-\end{note}
+\proof Por inducción fuerte en la cantidad de números de la secuencia.
+\begin{itemize}
+	\item \textbf{Case base:} Para $n = 1$ el \ct es único ya que contiene un solo nodo.
+	\item \textbf{Hipótesis:} Si para toda secuencia de tamaño $m < n$ se cumple que el \ct derivado de ella es único entonces para toda secuencia de números de tamaño $n$ se cumple que el \ct derivado de ella es único.
+	\item Por a la \textbf{Propiedad 1} existe una bisección entre los elementos de la secuencia y los nodos del árbol.
+	\item Por a la \textbf{Propiedad 3} la raíz del árbol tiene que ser el elemento de menor valor en la secuencia. Sea $k$ la posición del elemento en la secuencia.
+	\item Por a la \textbf{Propiedad 2} el subárbol resultante de tomar el hijo izquierdo de la raíz es el \ct de la secuencia desde $1$ hasta $k - 1$. Si la raíz no tuviera hijo izquierdo es porque $k = 1$. Luego por hipótesis de inducción este subárbol cartesiano es único para la secuencia desde $1$ hasta $k - 1$.
+	\item Por a la \textbf{Propiedad 2} el subárbol resultante de tomar el hijo derecho de la raíz es el \ct de la secuencia desde $k + 1$ hasta $n$. Si la raíz no tuviera hijo derecho es porque $k = n$. Luego por hipótesis de inducción este subárbol cartesiano es único para la secuencia desde $k + 1$ hasta $n$.
+	\item Finalmente, como el subárbol izquierdo y el subárbol derecho resultantes de los hijos izquierdo y derecho de la raíz del árbol son únicos para sus respectivas secuencias entonces el árbol completo es único para la secuencia de $1$ hasta $n$. 
+\end{itemize}
+
+Si una secuencia contiene números repetidos, el \ct se puede definir determinando una regla de desempate (por ejemplo, determinando que el primer número repetido sea tratado como menor que su homólogo en la secuencia) antes de aplicar las propiedades anteriores.
 
 \begin{observation}
 	Cada camino $v_1, v_2, ... , v_k$ desde la raíz hasta una hoja en un \ct forma una secuencia monótona creciente.
 \end{observation}
 
-\begin{notation}
-	Denotaremos como $CT(1..n)$ al \ct derivado de la secuencia de números $S[1..n] = s_1, s_2, ... , s_n$
-\end{notation}
+Denotaremos como $CT(1..n)$ al \ct derivado de la secuencia de números $S[1..n] = s_1, s_2, ... , s_n$
 
 \begin{definition}
 	El \textbf{\rmp}de un \ct es el camino formado por la raíz, y el \textbf{\rmp}del subárbol formado por su hijo derecho si es que tiene hijo derecho.
@@ -82,10 +100,9 @@
 
 \begin{lemma}
 	El padre $v$ del nodo $i$ en el $CT(1..i)$ es uno de los nodos del \rmp del $CT(1..i-1)$ a menos que $i$ sea la raíz de $CT(1..i)$
-	\begin{prooflemma}
-		Por definición, si y solo si $S[i]$ es el valor más pequeño en $S[1..i]$, $i$ es la raíz de $CT(1..i)$. Si $S[i]$ no es el más pequeño en $S[1..i]$, entonces, existe un nodo $v$ en $CT(1..i)$ que también es un nodo en $CT(1..i-1)$ que es padre de $i$ en $CT(1..i)$. Por contradicción, asumimos que el padre $v$ de $i$ en $CT(1..i)$ no está en el \rmp del $CT(1..i-1)$. Entonces por la Observación 1 el camino desde la raíz a $v$, entonces debe existir un nodo $v'$ en el \rmp del $CT(1..i-1)$ tal que $v < v' < i$ y $S[i] > S[v] > S[v']$. Pero entonces, por definición, $v'$ tiene que estar en el subárbol izquierdo de $i$ en el $CT(1..i)$ y por lo tanto $S[v']$ tiene que ser menor que $S[i]$, lo cual es una contradicción.
-	\end{prooflemma}
 \end{lemma}
+
+\proof Por definición, si y solo si $S[i]$ es el valor más pequeño en $S[1..i]$, $i$ es la raíz de $CT(1..i)$. Si $S[i]$ no es el más pequeño en $S[1..i]$, entonces, existe un nodo $v$ en $CT(1..i)$ que también es un nodo en $CT(1..i-1)$ que es padre de $i$ en $CT(1..i)$. Por contradicción, asumimos que el padre $v$ de $i$ en $CT(1..i)$ no está en el \rmp del $CT(1..i-1)$. Entonces por la Observación 1 el camino desde la raíz a $v$, entonces debe existir un nodo $v'$ en el \rmp del $CT(1..i-1)$ tal que $v < v' < i$ y $S[i] > S[v] > S[v']$. Pero entonces, por definición, $v'$ tiene que estar en el subárbol izquierdo de $i$ en el $CT(1..i)$ y por lo tanto $S[v']$ tiene que ser menor que $S[i]$, lo cual es una contradicción.
 
 \begin{observation}
 	Del \textbf{Lema 1} se deduce que si $i$ es la raíz del $CT(1..i)$, entonces la raíz de su subárbol izquierdo es la raíz del $CT(1..i-1)$, y si $i$ no es la raíz del $CT(1..i)$, entonces el hijo izquierdo de $i$ en el $CT(1..i)$ es la raíz del subárbol derecho de algún nodo $v$ en el \rmp del $CT(1..i-1)$. Es decir, una vez que encontramos $v$, las actualizaciones del $CT(1..i-1)$ al $CT(1..i)$ se realizan en tiempo constante.
@@ -93,15 +110,15 @@
 
 \begin{theorem}
 	El \ct derivado de una secuencia de números distintos puede ser construido en tiempo lineal.
-	\begin{proof}
-		Considere la construcción en línea donde comenzamos desde el $CT(1..1)$, luego construimos el $CT(1..2)$, el $CT(1..3)$ hasta llegar al $CT(1..n)$. Supongamos que el $CT(1..i-1)$ ya está construido, y para construir el $CT(1..i)$ comparamos $S[i]$ con los valores del camino más a la derecha del $CT(1..i-1)$ desde abajo hacia arriba, para encontrar el primer nodo $v$ tal que $S[v] < S[i]$. Luego, los nodos revisados antes de encontrar el nodo $v$ estarán en el subárbol izquierdo de $i$ en el $CT(1..i)$, y nunca volverán a estar en el camino más a la derecha en ningún árbol durante la construcción en línea. Por lo tanto, cada nodo se revisa solo una vez, y dado que hay $n$ nodos, el número total de comparaciones realizadas para encontrar los puntos de inserción es $O(n)$. Cada inserción lleva tiempo constante.
-	\end{proof}
 \end{theorem}
 
-\begin{code}
-	Código para construir un \ct a partir de una secuencia de números en tiempo lineal.
-	\lstinputlisting[language=Python]{cartesian_tree_code.py}
-\end{code}
+\proof Considere la construcción en línea donde comenzamos desde el $CT(1..1)$, luego construimos el $CT(1..2)$, el $CT(1..3)$ hasta llegar al $CT(1..n)$. Supongamos que el $CT(1..i-1)$ ya está construido, y para construir el $CT(1..i)$ comparamos $S[i]$ con los valores del camino más a la derecha del $CT(1..i-1)$ desde abajo hacia arriba, para encontrar el primer nodo $v$ tal que $S[v] < S[i]$. Luego, los nodos revisados antes de encontrar el nodo $v$ estarán en el subárbol izquierdo de $i$ en el $CT(1..i)$, y nunca volverán a estar en el camino más a la derecha en ningún árbol durante la construcción en línea. Por lo tanto, cada nodo se revisa solo una vez, y dado que hay $n$ nodos, el número total de comparaciones realizadas para encontrar los puntos de inserción es $O(n)$. Cada inserción lleva tiempo constante.
+
+\nl
+
+\textbf{Código 1} Código para construir un \ct a partir de una secuencia de números en tiempo lineal.
+
+\lstinputlisting[language=Python]{cartesian_tree_code.py}
 
 Por la naturaleza binaria del \ct resulta natural utilizarlos como árbol binario de búsqueda para una secuencia ordenada de valores. Sin embargo, definir un árbol binario basado en los mismo valores que forman las llaves de un árbol binario de búsqueda puede no funcionar bien pues el \ct de una secuencia ordenada no es mas que una rama, comenzando en el punto mas a la izquierda y una búsqueda binaria en ese árbol se degenera a una búsqueda secuencial en dicha rama. Una solución para esto es construir arboles de búsquedas menos degenerados seleccionando valores de prioridad para cada llave que son distintos que la llaves, ordenando la entrada por las llaves y utilizando la secuencia correspondiente de prioridades para general el \ct.\\
 
