@@ -2,4 +2,4 @@
 
 * Árbol Cartesiano
 * Algoritmo de Dijkstra
-* Criba de Eratostenes
+* Criba de Eratóstenes
