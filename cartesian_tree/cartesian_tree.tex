@@ -184,4 +184,19 @@ Tenga en cuenta que la llave de un nodo es el número de nodos menor que este (t
 
 Ahora está claro cómo calcular rápidamente la llave implícita del nodo actual. Como en todas las operaciones llegamos a cualquier nodo descendiendo en el árbol, podemos acumular esta suma y pasarla a la función. Si vamos al subárbol izquierdo, la suma acumulada no cambia, si vamos al subárbol derecho aumenta con $cnt(T \rightarrow L) + 1$.
 
+\nl
+
+Ahora consideremos la implementación de varias operaciones en Treap implícito:
+
+\nl
+
+\begin{itemize}
+	\item \textbf{Insertar elemento:} Supongamos que necesitamos insertar un elemento en la posición pos. Dividimos el treap en dos partes, que corresponden a los arreglos $[0, ..., pos-1]$ y $[pos, .., , sz]$; para ello lo llamamos $Split(T, T_1, T_2, pos)$. Luego podemos combinar el árbol $T_1$ con el nuevo vértice llamando a $Merge(T_1, T_1, new_item)$ (es fácil ver que se cumplen todas las condiciones previas). Finalmente, combinamos los árboles $T_1$ y $T_2$ de nuevo en $T$ llamando a $Merge(T, T_1, T_2)$.
+	\item \textbf{Eliminar elemento:} Esta operación es aún más fácil, encuentre el elemento a eliminar $T$, realice la combinación de sus hijos $L$ y $R$, y reemplace el elemento $T$ con el resultado de la combinación. De hecho, la eliminación de elementos en el tratamiento implícito es exactamente igual que en el tratamiento normal.
+	\item \textbf{Encuentra suma / mínimo, etc. en el intervalo:} Primero, cree un campo adicional $F$ en la estructura del elemento para almacenar el valor de la función objetivo para el subárbol de este nodo. Este campo es fácil de mantener de manera similar al mantenimiento de tamaños de subárboles: cree una función que calcule este valor para un nodo basándose en valores para sus hijos y agregue llamadas de esta función al final de todas las funciones que modifican el árbol.
+	En segundo lugar, necesitamos saber cómo procesar una consulta para un intervalo arbitrario $[A, B]$. Para obtener una parte del árbol que corresponde al intervalo $[A, B]$, necesitamos llamar a $Split(T, T_1, T_2, A)$, y luego a $Split(T_2, T_2, T_3, B - A + 1)$: después de este $T_2$ constará de todos los elementos en el intervalo $[A, B]$, y sólo de ellos. Por lo tanto, la respuesta a la consulta se almacenará en el campo $F$ de la raíz de $T_2$. Después de responder la consulta, el árbol debe restaurarse llamando a combinación $(T, T1, T2)$ y $Combinación(T, T, T_3)$.
+	\item \textbf{Adición en el intervalo:} Actuamos de forma similar al párrafo anterior, pero en lugar del campo $F$, almacenaremos un campo agregado que contendrá el valor agregado para el subárbol. Antes de realizar cualquier operación, debemos hacer "push" de este valor correctamente, es decir, cambiar $T \rightarrow L \rightarrow add$ y $T \rightarrow R \rightarrow add$, y limpiar el $add$ en el nodo principal. De esta manera, después de cualquier cambio en el árbol, la información no se perderá.
+	\item \textbf{Invertir en el intervalo:} De nuevo, esto es similar a la operación anterior, tenemos que agregar el indicador booleano $rev$ y establecerlo en verdadero cuando el subárbol del nodo actual debe invertirse. $Pushing$ este valor es un poco complicado: cambiamos los elementos secundarios de este nodo y establecemos este indicador en verdadero para ellos.
+\end{itemize}
+
 \end{document}
