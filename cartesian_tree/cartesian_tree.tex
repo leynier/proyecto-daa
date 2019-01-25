@@ -126,6 +126,62 @@ Raimund Seidel y Cecilia Aragon en 1996 en su articulo Randomized Search Trees s
 
 \section{Treap}
 
-Las operaciones básicas son la inserción, la eliminación y la búsqueda. Ademas, están las operaciones masivas de mezclar y separación.
+\subsection{Operaciones}
+
+\begin{itemize}
+	\item $Insert(X, Y)$ en $O(\log N)$: Añade un nuevo nodo al árbol. Una posible variante es pasar solo el valor X y generar aleatoriamente el valor Y dentro de la operación (asegurándose de que sea diferente de todas las demás prioridades en el árbol).
+	\item $Search(X)$ en $O(\log N)$: Busca un nodo con el valor clave X especificado. La implementación es la misma que para un árbol de búsqueda binario normal.
+	\item $Erase(X)$ en $O(\log N)$: Busca un nodo con el valor clave X especificado y lo elimina del árbol.
+	\item $Build(X_1, ..., X_N)$ en $O(N)$: Construye un árbol a partir de una lista de valores. Esto se puede hacer en tiempo lineal (asumiendo que $X_1, ..., X_N$ estén ordenados).
+	\item $Union(T_1, T_2)$ en $O(M \log (N / M))$: Mezcla dos árboles, asumiendo que todos los elementos son diferentes. Es posible lograr la misma complejidad si los elementos duplicados deben eliminarse durante la mezcla.
+	\item $Intersect(T_1, T_2)$ en $O(M \log (N / M))$: Encuentra la intersección de dos árboles (es decir, sus elementos comunes).
+\end{itemize}
+
+Además, debido al hecho de que un Treap es un árbol binario de búsqueda, puede implementar otras operaciones, como encontrar el K-ésimo elemento más grande o encontrar el índice de un elemento.
+
+\subsection{Implementación}
+
+En términos de implementación, cada nodo X, Y contiene punteros a los hijos izquierdo (L) y derecho (R). Implementaremos todas las operaciones requeridas usando solo dos operaciones auxiliares: Dividir y Mezclar.
+
+\begin{itemize}
+	\item $Split(T, X)$: Separa el árbol $T$ en 2 subárboles $L$ y $R$ (que son los valores de retorno de $Split$) tal que $L$ contenga todos los elementos con llave $X_L < X$, y $R$ contenga todos los elementos con llave $X_R > X$. Esta operación tiene una complejidad temporal de $O(\log N)$.
+	\item $Merge(T, X)$: Combina dos subárboles $T_1$ y $T_2$ y devuelve el nuevo árbol. Esta operación tiene una complejidad temporal de $O(\log N)$. Esto funciona bajo el supuesto de que $T_1$ y $T_2$ estén ordenados (todas las llaves $X$ en $T_1$ sean menores que todas las llaves en $T_2$). Por lo tanto, debemos combinar estos árboles sin violar el orden de las prioridades $Y$. Para hacer esto, elegimos como raíz del árbol la que tiene mayor prioridad $Y$ en el nodo raíz, y llamamos recursivamente a $Merge$ para el otro árbol y el correspondiente subárbol del nodo raíz seleccionado.
+\end{itemize}
+
+Ahora la implementación de $Insert(X, Y)$ se vuelve obvia. Primero descendemos en el árbol (como en un árbol de búsqueda binaria regular por $X$), y nos detenemos en el primer nodo en el que el valor de prioridad es menor que $Y$. Hemos encontrado el lugar donde insertaremos el nuevo elemento. Luego, llamamos a $Split(T, X)$ en el subárbol que comienza en el nodo encontrado, y utilizamos los subárboles $L$ y $R$ devueltos como elementos secundarios izquierdo y derecho del nuevo nodo.
+
+\nl
+
+La implementación de $Erase(X)$ también está clara. Primero descendemos en el árbol (como en un árbol de búsqueda binario regular por $X$), buscando el elemento que queremos eliminar. Una vez que se encuentra el nodo, llamamos $Merge(T, X)$ en él hijos y colocamos el valor de retorno de la operación en el lugar del elemento que estamos eliminando.
+
+\nl
+
+$Union(T_1, T_2)$ tiene una complejidad teórica $O(M \log (N / M))$, pero en la práctica funciona muy bien, probablemente con una constante oculta muy pequeña. Supongamos sin pérdida de generalidad que $T_1 \rightarrow Y > T_2 \rightarrow Y$, es decir, la raíz de $T_1$ será la raíz del resultado. Para obtener el resultado, necesitamos unir los árboles $T_1 \rightarrow L$, $T_1 \rightarrow R$ y $T_2$ en dos árboles que podrían ser hijos de la raíz $T_1$. Para hacer esto, llamamos $Split(T_2, T_1 \rightarrow X)$, dividiendo así $T_2$ en dos partes $L$ y $R$, que luego combinamos recursivamente con hijos de $T_1$: $Union(T_1 \rightarrow L, L)$ y $Union(T_1 \rightarrow R, R)$, obteniendo así los subárboles izquierdos y derechos del resultado.
+
+\nl
+
+Para ampliar la funcionalidad del Treap, a menudo es necesario almacenar el número de nodos en el subárbol de cada nodo. Por ejemplo, se puede usar para buscar el elemento k-esimo más grande del árbol en $O(\log N)$, o para encontrar el índice del elemento en la lista ordenada con la misma complejidad. La implementación de estas operaciones será la misma que para el árbol de búsqueda binario regular.
+
+\section{Treap Implícito}
+
+El Treap implícito es una modificación simple del Treap regular que genera una estructura de datos muy poderosa. De hecho, el Treap implícito se puede considerar como un arreglo con los siguientes procedimientos implementados (todo en $O(\log N)$).
+
+\begin{itemize}
+	\item Insertar un elemento en el arreglo en cualquier ubicación.
+	\item Eliminación de un elemento arbitrario.
+	\item Encontrar la suma, el elemento mínimo / máximo, etc. en un intervalo arbitrario.
+	\item Adición en un intervalo arbitrario.
+	\item Inversión de elementos en un intervalo arbitrario.
+\end{itemize}
+
+La idea es que las llaves deben ser índices de los elementos del arreglo. Pero no almacenaremos estos valores explícitamente (de lo contrario, por ejemplo, insertar un elemento causaría cambios en la llave en $O(N)$ nodos del árbol).
+
+\nl
+
+Tenga en cuenta que la llave de un nodo es el número de nodos menor que este (tales nodos pueden estar presentes no solo en su subárbol izquierdo sino también en los subárboles izquierdos de sus ancestros). Más específicamente, la llave implícita para algún nodo $T$ es el número de nodos $cnt(T \rightarrow L)$ en el subárbol izquierdo de este nodo más los valores similares $cnt(P \rightarrow L) + 1$ para cada ancestro $P$ del nodo $T$, si $T$ está en el subárbol derecho de $P$.
+
+\nl
+
+Ahora está claro cómo calcular rápidamente la llave implícita del nodo actual. Como en todas las operaciones llegamos a cualquier nodo descendiendo en el árbol, podemos acumular esta suma y pasarla a la función. Si vamos al subárbol izquierdo, la suma acumulada no cambia, si vamos al subárbol derecho aumenta con $cnt(T \rightarrow L) + 1$.
 
 \end{document}
