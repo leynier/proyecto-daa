@@ -45,7 +45,7 @@
 \vspace{1cm}
 
 \begin{abstract}
-	En este documento daremos una breve introducción al problema de los caminos de costo mínimo. Explicaremos y demostraremos el algoritmo de Dijkstra para la resolución de dicho problema y mostraremos varias aplicaciones del algoritmo para resolver ejercicios.
+	En este documento haremos una breve introducción al problema de los caminos de costo mínimo. Explicaremos y demostraremos el algoritmo de Dijkstra para la resolución de dicho problema y mostraremos varias aplicaciones del algoritmo para resolver ejercicios.
 \end{abstract}
 
 \newpage
@@ -163,7 +163,7 @@ El proceso de inicialización del los valores estimados de los caminos mas corto
 
 \textbf{Código 1} Proceso de inicialización
 
-\lstinputlisting[language=Python]{dijkstra_code_initialize_single_source.py}
+\lstinputlisting[language=Python]{codes/initialize_single_source.py}
 
 \nl
 
@@ -173,7 +173,7 @@ El proceso de relajación de una arista $(u, v)$ consiste en probar si se puede 
 
 \textbf{Código 2} Proceso de relajación
 
-\lstinputlisting[language=Python]{dijkstra_code_relax.py}
+\lstinputlisting[language=Python]{codes/relax.py}
 
 \newpage
 
@@ -380,7 +380,7 @@ En la siguiente implementación se utiliza una cola con prioridad de mínimos Q 
 
 \textbf{Código 1} Proceso de inicialización
 
-\lstinputlisting[language=Python]{dijkstra_code.py}
+\lstinputlisting[language=Python]{codes/dijkstra.py}
 
 Esta es la implementación clásica, más adelante veremos otra implementación ligeramente diferente y totalmente funcional en Python 3.
 
@@ -460,12 +460,12 @@ Históricamente, el desarrollo de los Heap de Fibonacci estuvo motivado por la o
 
 \subsection{Implementación Alternativa}
 
-\lstinputlisting[language=Python]{dijkstra_code.py}
+\lstinputlisting[language=Python]{codes/pseudo.py}
 
 \section{Problemas}
 
-\section{Bibliografía}
-
-Introduction to Algorithms. 3rd Edition.
+\nocite{*}
+\bibliographystyle{unsrt}
+\bibliography{dijkstra}
 
 \end{document}
