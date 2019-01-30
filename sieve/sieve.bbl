@@ -1,0 +1,42 @@
+\begin{thebibliography}{1}
+
+\bibitem{ngpia}
+Richard Hoche.
+\newblock Nicomachi geraseni pythagorei introductionis arithmeticae libri ii.
+
+\bibitem{eseapa}
+J.~C. Morehead.
+\newblock Extension of the sieve of eratosthenes to arithmetical progressions
+  and applications.
+
+\bibitem{aipns}
+Jonathan Sorenson.
+\newblock An introduction to prime number sieves.
+
+\bibitem{ant}
+E.~Bach and J.~Shallit.
+\newblock Algorithmic number theory, vol. 1: Efficient algorithms, mit press,
+  cambridge, ma.
+
+\bibitem{ompts}
+T.~A Peng.
+\newblock One million primes through the sieve.
+
+\bibitem{lpnsaft}
+Paul Pritchard.
+\newblock Linear prime-number sieves: a family tree.
+
+\bibitem{pnap}
+Crandall and Pomerance.
+\newblock Prime numbers: A computational perspective, second edition, springer.
+
+\bibitem{ssepap}
+Richard~H Bays, Carter.~Hudson.
+\newblock The segmented sieve of eratosthenes and primes in arithmetic
+  progressions.
+
+\bibitem{gfgss}
+Geeks for Geeks.
+\newblock Segmented sieve.
+
+\end{thebibliography}

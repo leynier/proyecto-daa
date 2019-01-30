@@ -45,7 +45,7 @@
 \vspace{1cm}
 
 \begin{abstract}
-	
+	En este documento haremos una breve introducción al algoritmo de la Criba de Eratóstenes. También veremos su complejidad temporal y espacial, así como, una variación de la misma Criba para poder calcular los primos menores que un $n$ dado muy grande, ahorrando memoria computando la Criba por segmentos. Luego mostraremos varias aplicaciones del algoritmo para resolver ejercicios.
 \end{abstract}
 
 \newpage
@@ -53,5 +53,135 @@
 \tableofcontents
 
 \newpage
+
+\section{Criba de Eratóstenes}
+
+\subsection{Introducción}
+
+\nl
+
+La Criba de Eratóstenes es un algoritmo simple para buscar todos los números primos menores que un numero $n$.
+
+\nl
+
+La referencia más antigua conocida de la criba se encuentra en \textit{Introduction to Arithmetic}\cite{ngpia} de Nicomachus de Gerasa, que la describe y atribuye a Eratóstenes de Cyrene, un matemático griego.
+
+\nl
+
+Es una de las formas más eficientes de encontrar los números primos más pequeño y se puede utilizar para encontrar números primos en las progresiones aritméticas.\cite{eseapa}
+
+\subsection{Descripción}
+
+\nl
+
+Se forma una tabla con todos los números naturales comprendidos entre $2$ y $n$, y se van tachando los números que no son primos de la siguiente manera: Comenzando por el $2$, se tachan todos sus múltiplos; comenzando de nuevo, cuando se encuentra un número entero que no ha sido tachado, ese número es declarado primo, y se procede a tachar todos sus múltiplos, así sucesivamente. El proceso termina cuando el cuadrado del siguiente número confirmado como primo es mayor que $n$.
+
+\subsection{Implementación}
+
+\lstinputlisting[language=Python]{codes/sieve.py}
+
+\nl
+
+Este algoritmo produce todos los números primos que no son mayores que $n$. Incluye las optimizaciones comunes, que es comenzar a enumerar los múltiplos de cada $i$ primo desde $i^2$. La complejidad del tiempo de este algoritmo es $O(n \log(\log(n)))$\cite{aipns}, siempre que la actualización del array sea una operación $O(1)$, como suele ser el caso.
+
+\nl
+
+\subsection{Complejidad Temporal}
+
+\nl
+
+El trabajo realizado por este algoritmo es casi en su totalidad las operaciones para eliminar las representaciones de números compuestos que, para la versión básica no optimizada es la suma del rango dividido por cada uno de los números primos hasta ese rango o:
+
+$$n \sum_{p \leqslant n}\frac{1}{p}$$
+
+donde n es el rango de la criba en este y todos los análisis posteriores.
+
+\nl
+
+Al reorganizar el segundo teorema de Mertens, esto es igual a $n (\log(\log(n)) + M)$ a medida que $n$ se aproxima al infinito, donde $M$ es la constante de Meissel-Mertens.
+
+\nl
+
+La optimización de comenzar en el cuadrado de cada primo y solo seleccionar los primos menores que la raíz cuadrada cambia la $n$ en la expresión de arriba para $\sqrt{n}$ y no iterar hasta que el cuadrado signifique que la suma de los primos base cada uno menos dos se resta de las operaciones. Como la suma de los primeros $x$ primos es $\frac{1}{2}x^2\log(x)$\cite{ant} y el teorema del número primo dice que $x \approxeq \frac{x}{\log(x)}$, donde la suma de los primos hasta $n$ es $\frac{n^2}{2 \log(n)}$, y por lo tanto la suma de los primeros primos hasta $\sqrt{n}$ es $\frac{1}{\log(n)}$ expresado como un factor de $n$. El intervalo entre dos primos es $2\pi(\sqrt{n})$, donde $\pi$ es la función para contar primos, o $\sqrt{4\sqrt{n}}$, expresando esto como un factor de $n$ como lo son los otros términos, esto es $\frac{4}{\sqrt{n}\log(n)}$. Combinando todo esto, la expresión para el número de operaciones con las optimizaciones sin la factorización de la rueda es:
+
+$$\log(\log(n)) - \frac{1}{\log(n)} \left(1  -\frac{4}{\sqrt{n}}\right) + M - \log(2)$$
+
+Para los casos de factorización de ruedas, hay un desplazamiento adicional de las operaciones no realizadas de:
+
+$$ \sum_{p \leqslant x}\frac{1}{p} $$
+
+donde $x$ es el número primo más alto de la rueda y se aplica un factor constante de toda la expresión que es la fracción de los candidatos primarios restantes en comparación con la circunferencia de la rueda que se repite. La circunferencia de la rueda es:
+
+$$ \prod_{p \leqslant x}p $$
+
+y se puede determinar fácilmente que este factor de rueda es:
+
+$$ \prod_{p \leqslant x}\frac{p - 1}{p} $$
+
+como $\frac{p - 1}{p}$ es la fracción de los candidatos restantes para el primo de rueda más alto, $x$, y cada primo menor subsiguiente deja su fracción correspondiente de la fracción combinada anterior.
+
+\nl
+
+Combinando todo el análisis anterior, el número total de operaciones para una criba hasta $n$, incluida la factorización de la rueda para primos hasta $x$, es aproximadamente:
+
+$$ \prod_{p \leqslant x}\frac{p - 1}{p} \left( \log(\log(n)) - \frac{1}{\log(n)} \left(1  -\frac{4}{\sqrt{n}}\right) + M - \log(2) - \sum_{p \leqslant x}\frac{1}{p} \right) $$
+
+Para mostrar que la expresión anterior es una buena aproximación al número de operaciones para eliminar los números compuestos realizadas por el algoritmo, a continuación se muestra una tabla que muestra el número de operaciones realmente medido para una implementación práctica de la criba de Eratóstenes en comparación con el número de operaciones predice a partir de la expresión anterior, tanto expresados como una fracción del rango (redondeado a cuatro lugares decimales) para diferentes rangos de la criba y factorizaciones de rueda (tenga en cuenta que la última columna es una rueda práctica máxima en cuanto al tamaño de los huecos de las ruedas) - casi 10 millones de valores):
+
+\begin{center}
+	\includegraphics[width=10cm]{images/table1.png}
+\end{center}
+
+La tabla anterior muestra que la expresión anterior es una muy buena aproximación al número total de operaciones de la criba de alrededor de cien mil (105) y superiores.
+
+\nl
+
+La criba de Eratóstenes es una forma popular de comparar el rendimiento de las computadoras. \cite{ompts} Como se puede ver de lo anterior al eliminar todas las operaciones constantes y los factores constantes e ignorar los términos que tienden a cero a medida que $n$ se acerca al infinito, la complejidad del tiempo para calcular todos los primos menores que $n$ en el modelo de máquina de acceso aleatorio es $O(n\log(\log(n)))$ operaciones, una consecuencia directa del hecho de que la serie armónica principal se aproxima asintóticamente a $\log(\log(n))$. Sin embargo, tiene una complejidad de tiempo exponencial con respecto al tamaño de entrada, lo que lo convierte en un algoritmo pseudo-polinómico. El algoritmo básico requiere $O(n)$ de memoria.
+
+\nl
+
+La complejidad basada en bits del algoritmo es $O(n(\log(n)) (\log(\log(n))))$ operaciones de bit con un requisito de memoria de $O(n)$.\cite{lpnsaft}
+
+\section{Criba Segmentada}
+
+\subsection{Introducción}
+
+\nl
+
+Como señala Jon Sorenson, el problema con la criba de Eratóstenes no es el número de operaciones que realiza, sino sus requisitos de memoria.\cite{aipns} Para $n$ grande, el rango de números primos puede no caber en la memoria. Peor aún, incluso para $n$ no tan grandes, su uso de caché es altamente subóptimo. El algoritmo recorre todo el array, sin mostrar casi ninguna localidad de referencia.
+
+\nl
+
+Las cribas segmentadas ofrecen una solución a estos problemas, donde solo se computa partes del rango a la vez.\cite{pnap} Se conocen desde la década de 1970 y funcionan de la siguiente manera:\cite{aipns}\cite{ssepap}
+
+\subsection{Descripción}
+
+\nl
+
+La idea de una criba segmentada es dividir el rango $[0 .. n-1]$ en diferentes segmentos y calcular los primos en todos los segmentos uno por uno. Este algoritmo primero usa la criba común para encontrar números primos más pequeños o iguales a $\sqrt{n}$. A continuación se presentan los pasos utilizados en la criba segmentada.\cite{gfgss}
+
+\begin{enumerate}
+	\item Use una criba común para encontrar todos los números primos hasta $\sqrt{n}$ y almacene estos números primos en una lista.
+	\item Necesitamos todos los números primos en el rango $[0..n-1]$. Dividimos este rango en diferentes segmentos, de manera que el tamaño de cada segmento es como máximo $\sqrt{n}$.
+	\item Hacer lo siguiente para cada segmento $[comienzo ... final]$.
+	\begin{itemize}
+		\item Crear un array de tamaño $final - comienzo + 1$. Aquí solo necesitamos $O(x)$ espacio donde $x$ es el número de elementos en un rango dado.
+		\item Iterar a través de todos los números primos encontrados en el paso $1$. Para cada número primo, marque sus múltiplos en el rango dado $[comienzo ... final]$.
+	\end{itemize}
+\end{enumerate}
+
+\subsection{Implementación}
+
+\lstinputlisting[language=Python]{codes/segmented_sieve.py}
+
+\subsection{Complejidad Temporal}
+
+\nl
+
+La versión de la criba segmentada tiene la misma complejidad temporal de $O(n \log(\log(n)))$ que la versión común, pero reduce la complejidad espacial al tamaño mínimo de la longitud del segmento más la memoria requerida para almacenar los números primos base menores que la raíz cuadrada de la longitud del segmento utilizado para marcar y eliminar los compuestos de los segmentos sucesivos $O\left(\frac{\sqrt{n}}{\log(n)}\right)$.
+
+\nocite{*}
+\bibliographystyle{unsrt}
+\bibliography{sieve}
 
 \end{document}
