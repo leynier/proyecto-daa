@@ -262,7 +262,7 @@ Los números casi primos son los números no primos que son divisibles por un so
  
 \subsection{Doble felicidad}
 
-\subsubsection{Descripcion}
+\subsubsection{Descripción}
 
 En la lección de matemáticas, un profesor le pidió a cada alumno que sacara sus propios números de la suerte. Como fanático de la teoría de números, Peter eligió los números primos. Bob era más original. Dijo que el número $t$ es su número de la suerte, si se puede representar como:
 
@@ -284,19 +284,19 @@ Ahora, los niños decidieron averiguar cuántos días del intervalo $[l, r]$ $(l
 
 \nl
 
-\textbf{Ejemplo de Entrada 1:} 3 5
+\textbf{Ejemplo de Entrada 1:} $3 5$
 
 \nl
 
-\textbf{Ejemplo de Salida 1:} 1
+\textbf{Ejemplo de Salida 1:} $1$
 
 \nl
 
-\textbf{Ejemplo de Entrada 2:} 6 66
+\textbf{Ejemplo de Entrada 2:} $6\ 66$
 
 \nl
 
-\textbf{Ejemplo de Salida 2:} 7
+\textbf{Ejemplo de Salida 2:} $7$
 
 \nl
 
@@ -320,7 +320,63 @@ Importante notar que el intervalo es muy grande, por lo que se hace necesario ut
 
 \textbf{Fuente:} \href{https://codeforces.com/contest/114/problem/E}{codeforces.com/contest/114/problem/E}
 
+\subsection{Mi niña bonita Noora}
+
+\subsubsection{Descripción}
+
+En la Universidad de Pavlopolis, donde estudia Noora, se decidió celebrar el concurso de belleza \textit{Universidad Miss Pavlopolis}. Vamos a describir el proceso de elegir a la chica más hermosa de la universidad con más detalle.
+
 \nl
+
+El concurso se lleva a cabo en varias etapas. Supongamos que exactamente $n$ chicas participan en la competencia inicialmente. Todos los participantes se dividen en grupos iguales, $x$ cantidad de participantes en cada grupo. Además, el número $x$ se elige arbitrariamente, es decir, en cada etapa el número $x$ puede ser diferente. Dentro de cada grupo, el jurado del concurso compara la belleza de las chicas en el formato \textit{todas contra todas}. De esta manera, si el grupo consiste en $x$ niñas, entonces se producen $\frac{x(x-1)}{2}$ comparaciones. Luego, de cada grupo, se selecciona el participante más bello. Las chicas seleccionadas ingresan a la siguiente etapa del concurso. Por lo tanto, si $n$ niñas se dividieron en grupos, $x$ cantidad de participantes en cada grupo, entonces exactamente $\frac{n}{x}$ participantes ingresarán a la siguiente etapa. El concurso continúa hasta que quede exactamente una niña que será \textit{Miss Pavlopolis University}.
+
+\nl
+
+Pero para el jurado este concurso es una tarea muy tediosa. Les gustaría dividir a las niñas en grupos en cada etapa para que el número total de comparaciones por parejas de las niñas sea lo menos posible. Sea $f(n)$ el número total mínimo de comparaciones que deben realizarse para seleccionar al participante más hermoso, si admitimos $n$ chicas en la primera etapa.
+
+\nl
+
+Los organizadores del concurso están locos. Le dan a Noora tres enteros $t$, $l$ y $r$, y le piden a la pobre chica que calcule el valor de la siguiente expresión:
+
+$$ t^0 * f(l) + t^1 * f(l + 1) + ... + t^{r - l} * f(r) $$
+
+Sin embargo, dado que el valor de esta expresión puede ser bastante grande, los organizadores le piden que la calcule módulo $10^9 + 7$. Si Noora puede calcular el valor de esta expresión, los organizadores le prometen ayuda durante el concurso de belleza. Pero la pobre niña no es fuerte en matemáticas, así que buscó ayuda con Leha y él se dirigió a ti.
+
+\nl
+
+\textbf{Entrada:} La primera y única línea contiene tres enteros $t$, $l$ y $r$ $(1 \leqslant t < 10^9 + 7,\ 2 \leqslant l \leqslant r \leqslant 5 * 10^6)$.
+
+\nl
+
+\textbf{Salida:} En la primera línea, imprimir un solo entero: el valor de la expresión módulo $10^9 + 7$.
+
+\nl
+
+\textbf{Ejemplo de Entrada:} $2\ 2\ 4$
+
+\nl
+
+\textbf{Ejemplo de Salida:} $19$
+
+\subsubsection{Solución}
+
+Supongamos que ya hemos calculado $f(2)$, $f(3)$, $...$, $f(r)$. Entonces, calcular el valor de la expresión es fácil.
+
+\nl
+
+Considere el proceso de cálculo de $f(x)$. Supongamos que encontramos una respuesta óptima. Represente esta respuesta como una secuencia de números enteros $d_1, d_2, ..., d_k$: en la primera etapa dividiremos a las niñas en grupos de participantes de $d_1$, en la segunda etapa en grupos de participantes de $d_2$ y así sucesivamente. Probemos que todos los $d_i$ deben ser primos.
+
+\nl
+
+Supongamos que algunos $d_i$ es un número compuesto. Luego se puede descomponer en dos números $d_i = a * b$. Además, sea $n$ el número de chicas que son admitidas en la i-ésima etapa. Luego en la actual i-ésima etapa ocurrirán $ \frac{n}{d_i} * \frac{d_i(d_i - 1)}{2} =  \frac{n(d_i - 1)}{2}$ comparaciones. Pero si dividimos esta etapa en dos nuevas etapas, entonces el número de comparaciones es $ \frac{n(a-1)}{2} + \frac{n(b - 1)}{2a} \leqslant \frac{n(a-1)}{2} + \frac{n(b-1)}{2} \leqslant \frac{n(a+b-2)}{2} \leqslant \frac{n(ab - 1)}{2} = \frac{n(d_i - 1)}{2}$. Por lo tanto, hemos demostrado que todos los $d_i$ deben ser primos. Entonces es fácil escribir una dinámica, que se calculará mediante la transición del estado a los estados dados al dividir el estado actual entre los divisores primos. Para resolver esta tarea podemos utilizar la criba de Eratóstenes.
+
+\nl
+
+\textbf{Código:} \href{https://gist.github.com/leynier/b79194f3397e3ac546aa01cf2c408462}{gist.github.com/leynier/b79194f3397e3ac546aa01cf2c408462}
+
+\nl
+
+\textbf{Fuente:} \href{https://codeforces.com/contest/822/problem/D}{codeforces.com/contest/822/problem/D}
 
 \nocite{*}
 \bibliographystyle{unsrt}
