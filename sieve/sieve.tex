@@ -9,6 +9,7 @@
 \usepackage{anyfontsize}
 \usepackage[spanish]{babel}
 \usepackage{listings}
+\usepackage{hyperref}
 \usepackage{latexsym}
 
 \usepackage{epstopdf}
@@ -180,6 +181,85 @@ La idea de una criba segmentada es dividir el rango $[0 .. n-1]$ en diferentes s
 
 La versión de la criba segmentada tiene la misma complejidad temporal de $O(n \log(\log(n)))$ que la versión común, pero reduce la complejidad espacial al tamaño mínimo de la longitud del segmento más la memoria requerida para almacenar los números primos base menores que la raíz cuadrada de la longitud del segmento utilizado para marcar y eliminar los compuestos de los segmentos sucesivos $O\left(\frac{\sqrt{n}}{\log(n)}\right)$.
 
+\section{Problemas}
+
+\subsection{Números casi primos}
+
+\nl
+
+\subsubsection{Descripción}
+
+Los números casi primos son los números no primos que son divisibles por un solo número primo. En este problema, su trabajo consiste en escribir un programa que encuentre la cantidad de números casi primos dentro de un cierto rango.
+
+\nl
+
+\textbf{Entrada:} La primera línea del archivo de entrada contiene un entero $N (N \leqslant 600)$ que indica cuántos conjuntos de entradas hay. Cada una de las siguientes $N$ líneas hace un único conjunto de entrada. Cada conjunto contiene dos números enteros $bajo$ y $alto$ $(0 < bajo \leqslant alto < 10^{12})$.
+
+\nl
+
+\textbf{Salida:} Para cada línea de entrada, excepto la primera línea, debe producir una línea de salida. Esta línea contiene un solo entero, que indica cuántos números casi primos están dentro del rango (inclusivo) $[bajo ... alto]$.
+
+\nl
+
+\textbf{Ejemplo de Entrada:}
+
+\nl
+
+\begin{tabular}{|l|l|}
+	\hline 3 &  \\ 
+	\hline 1 & 10 \\ 
+	\hline 1 & 20 \\ 
+	\hline 1 & 5 \\ 
+	\hline 
+\end{tabular} 
+
+\nl
+
+\textbf{Ejemplo de Salida:}
+
+\nl
+
+\begin{tabular}{|c|}
+	\hline 3 \\ 
+	\hline 4 \\ 
+	\hline 1 \\ 
+	\hline 
+\end{tabular} 
+
+\nl
+
+\subsubsection{Solución}
+
+\textbf{Primera idea fallida:} Utilizar un array de $int$ inicializados en $0$ en vez de un array de $bool$. Los primos quedarían con el valor $0$ y para los compuestos en vez de marcarlos como $false$, aumentar el valor en el array. Al final del proceso de la criba quedaría en el array para la posición i-ésima la cantidad de divisores primos del número $i$ a menos que $i$ sea primo que en este caso sería el valor $0$. Luego hacer una tabla acumulativa con los valores del array iguales a $1$ ya que estos son los únicos números divisibles por un único primo y que no son primos. El problema que tiene esta idea es que el rango es hasta $10^{12}$ y necesitariamos un array de esta longitud, lo cual no es posible.
+
+\nl
+
+\textbf{Idea correcta:} Calcular los primos hasta $10^6$ y guardarlos en una lista. Luego en esta lista ir haciendo búsquedas binarias para los valores de las raíces del limite inferior y superior e ir acumulando la diferencia del resultado de las búsquedas hasta que la raíz del limite superior sea menor que $2$.
+
+\nl
+
+\textbf{Demostración:}
+
+\begin{theorem}
+	$x$ es casi primo $\iff$ $\exists$ $k \in \mathbb{Z^*}\ k > 1$ y $p \in primos$ tal que $p^k = x$.
+\end{theorem}
+
+\proof Si $x$ es casi primo entonces es divisible por un único primo. Luego, por el teorema fundamental de la Aritmética $x = p^k$ y como $x$ no es primo, por ser casi primo, necesariamente $k > 1$. Por otro lado, si existen $p$ y $k$ tal que se cumplan las condiciones del lado derecho entonces por el teorema fundamental de la Aritmética $p$ y $k$ son únicos, dando lugar a que $x$ no sea primo y sea divisible por un único primo.
+
+\begin{theorem}
+	Buscar la cantidad de potencias k-ésimas de números primos entre $a$ y $b$ es lo mismo que buscar la cantidad de primos entre $\sqrt[k]{a}$ y $\sqrt[k]{b}$.
+\end{theorem}
+
+\proof Es consecuencia de que $\sqrt[k]{a} \leqslant p \leqslant \sqrt[k]{b} \Rightarrow a \leqslant p^k \leqslant b$.
+
+\nl
+
+\textbf{Código:} \href{https://gist.github.com/leynier/99a2f30059f118f1d8afd59489b4ebd9}{gist.github.com/leynier/99a2f30059f118f1d8afd59489b4ebd9}
+
+\nl
+
+\textbf{Fuente:} \href{http://coj.uci.cu/24h/problem.xhtml?pid=1938}{coj.uci.cu/24h/problem.xhtml?pid=1938}
+ 
 \nocite{*}
 \bibliographystyle{unsrt}
 \bibliography{sieve}
