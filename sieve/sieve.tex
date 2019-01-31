@@ -260,6 +260,68 @@ Los números casi primos son los números no primos que son divisibles por un so
 
 \textbf{Fuente:} \href{http://coj.uci.cu/24h/problem.xhtml?pid=1938}{coj.uci.cu/24h/problem.xhtml?pid=1938}
  
+\subsection{Doble felicidad}
+
+\subsubsection{Descripcion}
+
+En la lección de matemáticas, un profesor le pidió a cada alumno que sacara sus propios números de la suerte. Como fanático de la teoría de números, Peter eligió los números primos. Bob era más original. Dijo que el número $t$ es su número de la suerte, si se puede representar como:
+
+$$ t = a^2 + b^2 $$
+
+donde $a$ y $b$ son enteros positivos arbitrarios.
+
+\nl
+
+Ahora, los niños decidieron averiguar cuántos días del intervalo $[l, r]$ $(l \leqslant r)$ son adecuados para la programación de pares. Decidieron que el día $i$ $(l \leqslant i \leqslant)$ es adecuado para la programación de pares si y solo si el número $i$ es afortunado para Peter y para Bob al mismo tiempo. Ayuda a los chicos a encontrar el número de esos días.
+
+\nl
+
+\textbf{Entrada:} La primera línea de la entrada contiene los números enteros $l, r$ $(1 \leqslant l, r \leqslant 3 * 10^8)$.
+
+\nl
+
+\textbf{Salida:} En la única línea, imprima el número de días en el segmento $[l, r]$, que son afortunados para Peter y Bob al mismo tiempo.
+
+\nl
+
+\textbf{Ejemplo de Entrada 1:} 3 5
+
+\nl
+
+\textbf{Ejemplo de Salida 1:} 1
+
+\nl
+
+\textbf{Ejemplo de Entrada 2:} 6 66
+
+\nl
+
+\textbf{Ejemplo de Salida 2:} 7
+
+\nl
+
+\subsubsection{Solución}
+
+La solución pasa por utilizar el teorema de Fermat\cite{oftst} que dice que un número primo $p$ es expresable como suma de dos cuadrados si y sólo si $p = 2$ ó $p \equiv 1 (mod\ 4)$.
+
+\nl
+
+Luego solo basta con buscar los primos en el intervalo y contar los que dejen resto $1$ al ser divididos por $4$.
+
+\nl
+
+Importante notar que el intervalo es muy grande, por lo que se hace necesario utilizar una criba segmentada para resolver el problema.
+
+\nl
+
+\textbf{Código:} \href{https://gist.github.com/leynier/937401c77149a6fe02781218d78ce5dd}{gist.github.com/leynier/937401c77149a6fe02781218d78ce5dd}
+
+\nl
+
+\textbf{Fuente:} \href{https://codeforces.com/contest/114/problem/E}{codeforces.com/contest/114/problem/E}
+
+\nl
+
 \nocite{*}
 \bibliographystyle{unsrt}
 \bibliography{sieve}

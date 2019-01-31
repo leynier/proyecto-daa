@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{ngpia}
 Richard Hoche.
@@ -38,5 +38,9 @@ Richard~H Bays, Carter.~Hudson.
 \bibitem{gfgss}
 Geeks for Geeks.
 \newblock Segmented sieve.
+
+\bibitem{oftst}
+Shailesh~A. Shirali.
+\newblock On fermat’s two-square theorem.
 
 \end{thebibliography}
