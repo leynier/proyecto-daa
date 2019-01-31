@@ -28,7 +28,7 @@
 \author{Leynier Gutiérrez González}
 
 \begin{document}
-
+	
 \maketitle
 
 \vspace{0.5cm}
@@ -81,7 +81,7 @@ Se forma una tabla con todos los números naturales comprendidos entre $2$ y $n$
 
 \lstinputlisting[language=Python]{codes/sieve.py}
 
-\nl
+\newpage
 
 Este algoritmo produce todos los números primos que no son mayores que $n$. Incluye las optimizaciones comunes, que es comenzar a enumerar los múltiplos de cada $i$ primo desde $i^2$. La complejidad del tiempo de este algoritmo es $O(n \log(\log(n)))$\cite{aipns}, siempre que la actualización del array sea una operación $O(1)$, como suele ser el caso.
 
@@ -151,7 +151,7 @@ La complejidad basada en bits del algoritmo es $O(n(\log(n)) (\log(\log(n))))$ o
 
 Como señala Jon Sorenson, el problema con la criba de Eratóstenes no es el número de operaciones que realiza, sino sus requisitos de memoria.\cite{aipns} Para $n$ grande, el rango de números primos puede no caber en la memoria. Peor aún, incluso para $n$ no tan grandes, su uso de caché es altamente subóptimo. El algoritmo recorre todo el array, sin mostrar casi ninguna localidad de referencia.
 
-\nl
+\newpage
 
 Las cribas segmentadas ofrecen una solución a estos problemas, donde solo se computa partes del rango a la vez.\cite{pnap} Se conocen desde la década de 1970 y funcionan de la siguiente manera:\cite{aipns}\cite{ssepap}
 
@@ -171,15 +171,15 @@ La idea de una criba segmentada es dividir el rango $[0 .. n-1]$ en diferentes s
 	\end{itemize}
 \end{enumerate}
 
-\subsection{Implementación}
-
-\lstinputlisting[language=Python]{codes/segmented_sieve.py}
-
 \subsection{Complejidad Temporal}
 
 \nl
 
 La versión de la criba segmentada tiene la misma complejidad temporal de $O(n \log(\log(n)))$ que la versión común, pero reduce la complejidad espacial al tamaño mínimo de la longitud del segmento más la memoria requerida para almacenar los números primos base menores que la raíz cuadrada de la longitud del segmento utilizado para marcar y eliminar los compuestos de los segmentos sucesivos $O\left(\frac{\sqrt{n}}{\log(n)}\right)$.
+
+\subsection{Implementación}
+
+\lstinputlisting[language=Python]{codes/segmented_sieve.py}
 
 \section{Problemas}
 
@@ -244,6 +244,8 @@ Los números casi primos son los números no primos que son divisibles por un so
 	$x$ es casi primo $\iff$ $\exists$ $k \in \mathbb{Z^*}\ k > 1$ y $p \in primos$ tal que $p^k = x$.
 \end{theorem}
 
+\newpage
+
 \proof Si $x$ es casi primo entonces es divisible por un único primo. Luego, por el teorema fundamental de la Aritmética $x = p^k$ y como $x$ no es primo, por ser casi primo, necesariamente $k > 1$. Por otro lado, si existen $p$ y $k$ tal que se cumplan las condiciones del lado derecho entonces por el teorema fundamental de la Aritmética $p$ y $k$ son únicos, dando lugar a que $x$ no sea primo y sea divisible por un único primo.
 
 \begin{theorem}
@@ -259,7 +261,7 @@ Los números casi primos son los números no primos que son divisibles por un so
 \nl
 
 \textbf{Fuente:} \href{http://coj.uci.cu/24h/problem.xhtml?pid=1938}{coj.uci.cu/24h/problem.xhtml?pid=1938}
- 
+
 \subsection{Doble felicidad}
 
 \subsubsection{Descripción}
@@ -282,7 +284,7 @@ Ahora, los niños decidieron averiguar cuántos días del intervalo $[l, r]$ $(l
 
 \textbf{Salida:} En la única línea, imprima el número de días en el segmento $[l, r]$, que son afortunados para Peter y Bob al mismo tiempo.
 
-\nl
+\newpage
 
 \textbf{Ejemplo de Entrada 1:} $3 5$
 
@@ -340,6 +342,8 @@ Los organizadores del concurso están locos. Le dan a Noora tres enteros $t$, $l
 
 $$ t^0 * f(l) + t^1 * f(l + 1) + ... + t^{r - l} * f(r) $$
 
+\nl
+
 Sin embargo, dado que el valor de esta expresión puede ser bastante grande, los organizadores le piden que la calcule módulo $10^9 + 7$. Si Noora puede calcular el valor de esta expresión, los organizadores le prometen ayuda durante el concurso de belleza. Pero la pobre niña no es fuerte en matemáticas, así que buscó ayuda con Leha y él se dirigió a ti.
 
 \nl
@@ -378,8 +382,10 @@ Supongamos que algunos $d_i$ es un número compuesto. Luego se puede descomponer
 
 \textbf{Fuente:} \href{https://codeforces.com/contest/822/problem/D}{codeforces.com/contest/822/problem/D}
 
+\newpage
+
 \nocite{*}
 \bibliographystyle{unsrt}
 \bibliography{sieve}
-
+	
 \end{document}

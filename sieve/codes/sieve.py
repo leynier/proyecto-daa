@@ -5,4 +5,4 @@ def sieve(n):
         if primes[i]:
             for j in range(i * i, n, i):
                 primes[j] = False
-    return [index for index, item in enumerate(primes) if item]
+    return [i for i, x in enumerate(primes) if x]
