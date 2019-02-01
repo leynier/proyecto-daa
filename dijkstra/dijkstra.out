@@ -1,0 +1,22 @@
+\BOOKMARK [1][-]{section.1}{Problema de los caminos m\341s cortos}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Definiciones}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Variantes del problema}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{Subestructura optima de los caminos m\341s cortos}{section.1}% 4
+\BOOKMARK [2][-]{subsection.1.4}{Aristas con peso negativo}{section.1}% 5
+\BOOKMARK [2][-]{subsection.1.5}{Representaci\363n de los caminos m\341s cortos}{section.1}% 6
+\BOOKMARK [2][-]{subsection.1.6}{Inicializaci\363n y Relajaci\363n}{section.1}% 7
+\BOOKMARK [2][-]{subsection.1.7}{Propiedades de los caminos m\341s cortos}{section.1}% 8
+\BOOKMARK [3][-]{subsubsection.1.7.1}{Propiedad de la desigualdad triangular}{subsection.1.7}% 9
+\BOOKMARK [3][-]{subsubsection.1.7.2}{Propiedad de la cota superior}{subsection.1.7}% 10
+\BOOKMARK [3][-]{subsubsection.1.7.3}{Propiedad de la convergencia}{subsection.1.7}% 11
+\BOOKMARK [3][-]{subsubsection.1.7.4}{Propiedad de la relajaci\363n de un camino}{subsection.1.7}% 12
+\BOOKMARK [3][-]{subsubsection.1.7.5}{Propiedad del subgrafo de predecesores}{subsection.1.7}% 13
+\BOOKMARK [1][-]{section.2}{Algoritmo de Dijkstra}{}% 14
+\BOOKMARK [2][-]{subsection.2.1}{Explicaci\363n}{section.2}% 15
+\BOOKMARK [2][-]{subsection.2.2}{Correctitud}{section.2}% 16
+\BOOKMARK [2][-]{subsection.2.3}{Complejidad Temporal}{section.2}% 17
+\BOOKMARK [2][-]{subsection.2.4}{Implementaci\363n Alternativa}{section.2}% 18
+\BOOKMARK [1][-]{section.3}{Problemas}{}% 19
+\BOOKMARK [2][-]{subsection.3.1}{Teatro de sombra en Berland}{section.3}% 20
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Descripci\363n}{subsection.3.1}% 21
+\BOOKMARK [3][-]{subsubsection.3.1.2}{Soluci\363n}{subsection.3.1}% 22

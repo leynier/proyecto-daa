@@ -10,6 +10,7 @@
 \usepackage[spanish]{babel}
 \usepackage{listings}
 \usepackage{latexsym}
+\usepackage[pdftex,breaklinks,colorlinks,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
 
 \usepackage{epstopdf}
 \DeclareGraphicsExtensions{.pdf,.png,.jpg,.gif,.eps}
@@ -463,6 +464,82 @@ Históricamente, el desarrollo de los Heap de Fibonacci estuvo motivado por la o
 \lstinputlisting[language=Python]{codes/pseudo.py}
 
 \section{Problemas}
+
+\subsection{Teatro de sombra en Berland}
+
+\subsubsection{Descripción}
+
+En Berland se estrenó una nueva película en ocasión del 14 de febrero. La locura por esta película estuvo muy presente entre los pueblos de la ciudad. Muchos de ellos decidieron ir al único cine de Berland. Como Berland está muy desarrollado, hay muchos edificios grandes (altos), incluido el cine. En cada edificio, excepto en el teatro, existe una persona (que quiere ver una película) o un taxista con su taxi. Como es muy tarde en la noche, cada conductor de taxi solo tendrá capacidad para un pasajero y también manejará para $T[i]$ horas (el viaje de regreso no está incluido). Se le dará la distancia entre el edificio $D [i]$ y la velocidad de cada taxista $S[i]$. Como soy el dueño de este teatro, ayúdame contándome la cantidad máxima de personas que veré en el teatro para la película. $N + P + 1$ edificio es mi teatro.
+
+\nl
+
+\textbf{Entrada:} La primera línea contiene $TT$ el número de casos de prueba. La primera línea de cada caso de prueba de prueba contiene $N$, $P$ y $R$ que indican el número de taxis, la cantidad de personas y la cantidad de carreteras entre los edificios. La siguiente línea contiene $N$ enteros separados por espacios que representan el edificio donde está presente el taxi. La siguiente línea contiene P enteros separados por espacios que representan el edificio donde los pasajeros están presentes. Las siguientes líneas $R$ contienen $X$, $Y$ y $D[i]$ el edificio conectado por carretera y la distancia entre ellas en $Km$. La siguiente línea contiene $N$ enteros espaciados en el espacio $S[i]$ que dan los detalles de velocidad de cada taxi en $Km/h$. La siguiente línea contiene $N$ enteros espaciados en el espacio $T[i]$ que dan los detalles de tiempo de cada taxi en horas.
+
+\nl
+
+\textbf{Salida:} Número máximo de personas que visitarán mi teatro.
+
+\nl
+
+\textbf{Ejemplo de Entrada:}
+
+\nl
+
+\begin{tabular}{|c|c|c|}
+	\hline 1 &  &  \\ 
+	\hline 1 & 2 & 4 \\ 
+	\hline 2 &  &  \\ 
+	\hline 1 & 3 &  \\ 
+	\hline 1 & 2 & 5 \\ 
+	\hline 2 & 3 & 5 \\ 
+	\hline 3 & 4 & 10 \\ 
+	\hline 1 & 3 & 8 \\ 
+	\hline 20 &  &  \\ 
+	\hline 1 &  &  \\ 
+	\hline 
+\end{tabular} 
+
+\nl
+
+\textbf{Ejemplo de Salida:} $1$
+
+\nl
+
+\subsubsection{Solución}
+
+\nl
+
+\textbf{Explicación:} Dado un grafo, cada vértice representa un edificio y las aristas representan las carreteras que los conectan. En cada edificio existe un pasajero o un taxista, excepto en el cine. Cada conductor de taxi tomará solo un pasajero y conducirá por un tiempo limitado. Su tarea es calcular el número máximo de pasajeros que llegan al teatro. Dado, que cada pasajero quiere ir al teatro y puede acercarse a cualquier conductor de taxi.
+
+\nl
+
+\textbf{Idea:} Crear un grafo bipartito en el que el primer conjunto sea para los taxistas y el segundo para los pasajeros. Crear una arista entre un conductor de taxi y un pasajero, si y solo si, ese conductor de taxi puede dejar a ese pasajero en el teatro dentro de su tiempo de conducción. Puede utilizar cualquier camino más corto de una única fuente para este propósito. Después que tienes el grafo, solo necesitas encontrar emparejamiento máximo.
+
+\nl
+
+\textbf{Demostración:} La demostración se basa principalmente en el modelamiento del problema. Como lo mencionamos anteriormente el problema se modelara como un grafo bipartito.
+
+\nl
+
+Para cada posible combinación de viajes de taxistas con pasajeros hasta el cine existe un emparejamiento en el grafo bipartito. Pues para un viajes de un taxista especifico con un pasajero especifico, el pasajero se quedará en el cine por lo que no se montará en otro taxi y el taxista una vez lleve al pasajero al cine dejara de trabajar, por lo que se puede considerar una arista del emparejamiento, pues sus vértices no estarán en otra posible arista del emparejamiento (no estarán en ningún otro viaje).
+
+\nl
+
+Ademas, para cada emparejamiento existe una posible combinación de viajes de taxistas con pasajeros hasta el cine. Pues un vértice representa a un taxista, el otro a un pasajero y la arista representa la posibilidad de que el taxista pueda llevar al pasajero hasta el cine, luego como es un emparejamiento, el taxista y el pasajero no participaran en ningún otro viaje.
+
+\nl
+
+Entonces, para encontrar la combinación de viajes de taxistas con pasajeros hasta el cine tal que la cantidad de pasajeros que llegue al cine sea la máxima basta con buscar el emparejamiento máximo en el grafo bipartito.
+
+\nl
+
+\textbf{Código:} \href{https://gist.github.com/leynier/5777af35e26c431433cab5b22f51f549}{gist.github.com/leynier/5777af35e26c431433cab5b22f51f549}
+
+\nl
+
+\textbf{Fuente:} \href{https://www.codechef.com/problems/CDVA1608}{www.codechef.com/problems/CDVA1608}
+
+\newpage
 
 \nocite{*}
 \bibliographystyle{unsrt}
