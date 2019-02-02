@@ -539,6 +539,211 @@ Entonces, para encontrar la combinación de viajes de taxistas con pasajeros has
 
 \textbf{Fuente:} \href{https://www.codechef.com/problems/CDVA1608}{www.codechef.com/problems/CDVA1608}
 
+\subsection{Número cromático}
+
+\subsubsection{Descripción}
+
+Se le proporciona un grafo conexo, no dirigido y ponderado con $N$ vértices y $M$ aristas con pesos positivos. Desde todos los caminos entre $1$ y $N$, llamaremos a aquellos que tienen el costo total mínimo óptimos. Debe seleccionar $K$ nodos de modo que la cantidad de rutas óptimas que pasan a través de todos los $K$ nodos seleccionados sea máxima.
+
+\nl
+
+\textbf{Entrada:} La primera línea contiene $3$ enteros $N$, $M$ y $K$. Cada una de las siguientes $M$ líneas contiene $3$ enteros $A$, $B$ y $C$, que representan una arista entre los vértice $A$ y $B$ que tienen un peso $C$.
+
+\nl
+
+\textbf{Salida:} Imprime una línea que contiene dos enteros: El primer entero es el número máximo de rutas óptimas que pueden pasar a través de los $k$ nodos seleccionados. El segundo entero representa el número de formas de seleccionar los $k$ nodos de modo que el número de rutas óptimas que pasan a través de ellos sea máximo. Este valor debe imprimirse módulo $10^9 +7$.
+
+\nl
+
+\textbf{Ejemplo de Entrada:}
+
+\nl
+
+\begin{tabular}{|c|c|c|}
+	\hline 4 & 5 & 3 \\ 
+	\hline 1 & 3 & 2 \\ 
+	\hline 1 & 2 & 1 \\ 
+	\hline 2 & 3 & 1 \\ 
+	\hline 2 & 4 & 2 \\ 
+	\hline 3 & 4 & 1 \\ 
+	\hline 
+\end{tabular}
+
+\nl
+
+\textbf{Ejemplo de Salida:} $2\ 2$
+
+\subsubsection{Solución}
+
+\nl
+
+Encontraremos el costo y el número de caminos más cortos entre todos los pares de vértices en tiempo $O(N^3)$ utilizando, por ejemplo, el algoritmo Floyd-Warshall.
+
+\nl
+
+Consideremos la siguiente notación:
+
+\nl
+
+\begin{itemize}
+	\item Sea $dist(u, v)$ el costo del camino más corto entre los vértices $u$ y $v$.
+	\item Sea $cnt(u, v)$ la cantidad de caminos más cortos entre los vértices $u$ y $v$.
+\end{itemize}
+
+Denotaremos un conjunto ordenado de nodos $a_1, a_2, ..., a_p$ por $[a_1, a_2, ..., a_p]_u$ si y solo si $dist(u, a_1) < dist(u, a_2) < ... < dist(u, a_p)$.
+
+\begin{lemma}
+	Hay un camino más corto entre los vértices $u$ y $v$ que pasa a través de $[a_1, a_2, ..., a_p]_u$ si y solo si $dist(u, v) = dist(u, a_1) + dist(a_1, a_2) + ... + dist(a_{p-1}, a_p) + dist(a_p, v)$.
+\end{lemma}
+
+El número de caminos más cortos a través de este conjunto de vértices es $cnt(u, v, [a_1, a_2, ..., a_p]_u) = cnt(u, a_1) + cnt(a_1, a_2) + ... + cnt(a_{p-1}, a_p) + cnt(a_p, v)$.
+
+\begin{corollary}
+	Si hay un camino más corto entre $u$ y $v$ que pasa a través de $[a_1, a_2, ..., a_p]_u$ y $[a_p,a_{p+1}]$, entonces también pasará a través de $[a_1, a_2, ..., a_p, a_{p+1}]_u$.
+\end{corollary}
+
+Consideremos la permutación $P$ del conjunto $\{1,2,3,...,N\}$ tal que $dist(1, P_i) \leqslant dist(1, P_{i+1})\ \forall i \in \{1,2,...,N-1\}$, y sea $P^{-1}$ el inverso.
+
+\nl
+
+Calcularemos la siguiente recurrencia de la programación dinámica:
+
+\begin{itemize}
+	\item Sea $dp_{k,i} = \max ( cnt(1, P_i, [a_1, a_2, ..., a_k]_1) | P_{a_k}^{-1} = i )$.
+	\item Como un resultado del corolario anterior, $dp_{k,i} = \max ( dp_{k-1,p} * cnt(P_p, P_i))$ tal que $p < i$ y hay un camino de $1$ a $N$ que pasa a través de $[P_p, P_i]_1$.
+\end{itemize}
+
+La primera respuesta de la salida será $dp_{K,P_N^{-1}}$.
+
+\nl
+
+\textbf{Código:} \href{https://gist.github.com/leynier/123fabd2b402fb2bf2c441c81a42c994}{gist.github.com/leynier/123fabd2b402fb2bf2c441c81a42c994}
+
+\nl
+
+\textbf{Fuente:} \href{https://csacademy.com/contest/archive/task/chromatic-number}{csacademy.com/contest/archive/task/chromatic-number}
+
+\subsection{El Team Rocket se levanta de nuevo}
+
+\subsubsection{Descripción}
+
+Es el cambio de año, por lo que Bash quiere enviar regalos a sus amigos. Hay $n$ ciudades en la región del Himalayan y están conectadas por $m$ carreteras bidireccionales. Bash vive en la ciudad $s$. Bash tiene exactamente un amigo en cada una de las otras ciudades. Como Bash quiere sorprender a sus amigos, decide enviar un Pikachu a cada uno de ellos. Como puede haber algunas ciudades a las que no se puede acceder desde la ciudad de Bash, solo envía un Pikachu a aquellos amigos que viven en una ciudad a la que se puede acceder desde su propia ciudad. También quiere enviárselo lo antes posible.
+
+\nl
+
+Encuentra el tiempo mínimo para que cada uno de sus Pikachus alcance su ciudad de destino. Como él es un perfeccionista, informa a todos sus amigos el momento en que su regalo les llegará. Un Pikachu viaja a una velocidad de $1$ metro por segundo. Sus amigos estaban emocionados de escuchar esto y estarían descontentos si sus regalos se retrasaran. Desafortunadamente, el Team Rocket anda suelto y se enteraron del plan de Bash. Quieren maximizar la cantidad de amigos que están descontentos con Bash.
+
+\nl
+
+Lo hacen destruyendo exactamente una de las otras $n - 1$ ciudades. Esto implica que el amigo que reside en esa ciudad muere, por lo que también es infeliz.
+
+\nl
+
+Tenga en cuenta que si se destruye una ciudad, todas las carreteras conectadas directamente a la ciudad también se destruyen y el Pikachu puede verse obligado a tomar una ruta alternativa más larga.
+
+\nl
+
+Tenga en cuenta que solo los amigos que están esperando un regalo cuentan como infelices, incluso si mueren.
+
+\nl
+
+Ya que Bash ya es una leyenda, ¿puedes ayudar al Team Rocket esta vez y averiguar el número máximo de amigos de Bash que pueden sentirse infelices al destruir exactamente una ciudad?
+
+\nl
+
+\textbf{Entrada:} La primera línea contiene tres enteros separados por espacios $n$, $m$ y $s$ $ \left( 2 \leqslant n \leqslant 2 * 10^5,\ 1 \leqslant m \leqslant \min\left( \frac{n(n-1)}{2},\ 3 * 10^5 \right),\ 1 \leqslant s \leqslant n \right) $ el número de ciudades y el número de carreteras en la región del Himalayan y la ciudad en que vive Bash.
+
+\nl
+
+Cada una de las siguientes $m$ líneas contiene tres enteros separados por espacios $u$, $v$ y $w$ $ ( 1 \leqslant u,\ v \leqslant n,\ u \neq v,\ 1 \leqslant w \leqslant 10^9 ) $ denotando que existe un camino entre la ciudad $u$ y la ciudad $v$ de longitud $w$ metros.
+
+\nl
+
+Se garantiza que ninguna carretera conecta una ciudad con sí misma y que no hay dos carreteras que conecten el mismo par de ciudades.
+
+\nl
+
+\textbf{Salida:} Imprime un solo entero, la respuesta al problema.
+
+\nl
+
+\textbf{Ejemplo de Entrada 1:}
+
+\nl
+
+\begin{tabular}{|c|c|c|}
+	\hline 4 & 4 & 4 \\ 
+	\hline 1 & 2 & 1 \\ 
+	\hline 2 & 3 & 1 \\ 
+	\hline 2 & 4 & 1 \\ 
+	\hline 3 & 1 & 1 \\ 
+	\hline 
+\end{tabular} 
+
+\nl
+
+\textbf{Ejemplo de Salida 1:} $2$
+
+\nl
+
+\textbf{Ejemplo de Entrada 2:}
+
+\nl
+
+\begin{tabular}{|c|c|c|}
+	\hline 7 & 11 & 2 \\ 
+	\hline 1 & 2 & 5 \\ 
+	\hline 1 & 3 & 5 \\ 
+	\hline 2 & 4 & 2 \\ 
+	\hline 2 & 5 & 2 \\ 
+	\hline 3 & 6 & 3 \\ 
+	\hline 3 & 7 & 3 \\ 
+	\hline 4 & 6 & 2 \\ 
+	\hline 3 & 4 & 2 \\ 
+	\hline 6 & 7 & 3 \\ 
+	\hline 4 & 5 & 7 \\ 
+	\hline 4 & 7 & 7 \\ 
+	\hline 
+\end{tabular} 
+
+\nl
+
+\textbf{Ejemplo de Salida 2:} $4$
+
+\nl
+
+\textbf{Nota:} En la primera muestra, al destruir la ciudad $2$, la longitud de la distancia más corta entre pares de ciudades $(3, 2)$ y $(3, 4)$ cambiará. De ahí que la respuesta sea $2$.
+
+\subsubsection{Solución}
+
+\nl
+
+En primer lugar, ejecutamos el algoritmo de camino más corto de Dijkstra desde $s$ como el vértice fuente y construimos el DAG de camino más corto del grafo dado. Tenga en cuenta que en el DAG de caminos más cortos, la longitud de cualquier camino de $s$ a cualquier otro vértice $x$ es igual a la longitud del camino más corto de $s$ a $x$ en el grafo dado.
+
+\nl
+
+Ahora, analicemos qué significa la función $f(s, x)$. Será igual al número de vértices $u$, de modo que cada camino de $s$ a $u$ pase a través del vértice $x$ en el DAG de los caminos más cortos, de modo que al eliminar el vértice $x$ del DAG, no habrá un camino de $s$ a $u$.
+
+\nl
+
+En otras palabras, queremos encontrar el número de vértices $u$ dominados por el vértice $x$ considerando $s$ como el vértice de fuente del DAG de los caminos más cortos. Esto se puede calcular construyendo el árbol dominador de DAG de los caminos más cortos considerando a $s$ como el vértice fuente.\cite{afaffd}
+
+\nl
+
+Se dice que un vértice $u$ domina un vértice con el vértice de origen $s$ si todas los caminos de $s$ a $w$ en el grafo deben pasar a través del nodo $u$.
+
+\nl
+
+Una vez que se forma el árbol dominador, la respuesta para cualquier nodo $x$ es igual al número de nodos en el subárbol de $x$ en el árbol formado.
+
+\nl
+
+\textbf{Código:} \href{https://gist.github.com/leynier/51860ee3609c3fd4c418e844b6d8edfe}{gist.github.com/leynier/51860ee3609c3fd4c418e844b6d8edfe}
+
+\nl
+
+\textbf{Fuente:} \href{https://codeforces.com/contest/757/problem/F}{codeforces.com/contest/757/problem/F}
+
 \newpage
 
 \nocite{*}

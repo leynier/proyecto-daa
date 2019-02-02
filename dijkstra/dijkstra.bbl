@@ -1,5 +1,9 @@
 \begin{thebibliography}{1}
 
+\bibitem{afaffd}
+Thomas Lengauer and Robert~Endre Tarjan.
+\newblock A fast algorithm for finding dominators in a flowgraph.
+
 \bibitem{ita3e}
 Thomas~H. Cormen.
 \newblock Introduction to algorithms, 3rd edition.
