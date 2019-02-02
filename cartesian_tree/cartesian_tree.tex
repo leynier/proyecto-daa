@@ -10,6 +10,7 @@
 \usepackage[spanish]{babel}
 \usepackage{listings}
 \usepackage{latexsym}
+\usepackage[pdftex,breaklinks,colorlinks,linkcolor=black,citecolor=black,urlcolor=black]{hyperref}
 
 \usepackage{epstopdf}
 \DeclareGraphicsExtensions{.pdf,.png,.jpg,.gif,.eps}
@@ -49,7 +50,7 @@
 \vspace{1cm}
 
 \begin{abstract}
-	
+	En este documento haremos una breve introducción al árbol Cartesiano. También veremos el Treap Implícito y los diferentes métodos para crea la estructura de datos. Luego mostraremos varias aplicaciones del algoritmo para resolver ejercicios.
 \end{abstract}
 
 \newpage
@@ -118,7 +119,7 @@ Denotaremos como $CT(1..n)$ al \ct derivado de la secuencia de números $S[1..n]
 
 \textbf{Código 1} Código para construir un \ct a partir de una secuencia de números en tiempo lineal.
 
-\lstinputlisting[language=Python]{cartesian_tree_code.py}
+\lstinputlisting[language=Python]{codes/cartesian_tree.py}
 
 Por la naturaleza binaria del \ct resulta natural utilizarlos como árbol binario de búsqueda para una secuencia ordenada de valores. Sin embargo, definir un árbol binario basado en los mismo valores que forman las llaves de un árbol binario de búsqueda puede no funcionar bien pues el \ct de una secuencia ordenada no es mas que una rama, comenzando en el punto mas a la izquierda y una búsqueda binaria en ese árbol se degenera a una búsqueda secuencial en dicha rama. Una solución para esto es construir arboles de búsquedas menos degenerados seleccionando valores de prioridad para cada llave que son distintos que la llaves, ordenando la entrada por las llaves y utilizando la secuencia correspondiente de prioridades para general el \ct.\\
 
@@ -198,5 +199,189 @@ Ahora consideremos la implementación de varias operaciones en Treap implícito:
 	\item \textbf{Adición en el intervalo:} Actuamos de forma similar al párrafo anterior, pero en lugar del campo $F$, almacenaremos un campo agregado que contendrá el valor agregado para el subárbol. Antes de realizar cualquier operación, debemos hacer "push" de este valor correctamente, es decir, cambiar $T \rightarrow L \rightarrow add$ y $T \rightarrow R \rightarrow add$, y limpiar el $add$ en el nodo principal. De esta manera, después de cualquier cambio en el árbol, la información no se perderá.
 	\item \textbf{Invertir en el intervalo:} De nuevo, esto es similar a la operación anterior, tenemos que agregar el indicador booleano $rev$ y establecerlo en verdadero cuando el subárbol del nodo actual debe invertirse. $Pushing$ este valor es un poco complicado: cambiamos los elementos secundarios de este nodo y establecemos este indicador en verdadero para ellos.
 \end{itemize}
+
+\newpage
+
+\section{Problemas}
+
+\subsection{Chef y el problema medio}
+
+\subsubsection{Descripción}
+
+Chef tiene una matriz. El tamaño de la matriz es igual a $N$. Chef quiere hacer $M$ consultas. Cada consulta tiene uno de los dos tipos:
+
+\begin{itemize}
+	\item \textbf{1 l r} Calcular alguna función interesante $F$ del sub-array indexando desde $l$ a $r$.
+	\item \textbf{2 l r} Modifique el array dado eliminando todos los elementos que tengan índices en el rango de $l$ a $r$ y luego coloque estos números al comienzo del array. El orden de todos los demás elementos sigue siendo el mismo.
+\end{itemize}
+
+Por ejemplo: se tiene el array $[1, 2, 3, 4, 5, 6, 7, 8]$ y consulta $(2 4 6)$, el array modificado después de la operación se verá como $[4, 5, 6, 1, 2 , 3, 7, 8]$. Todas las consultas que vayan después de esta consulta deben ejecutarse en el nuevo array.
+
+\nl
+
+Ahora definamos la función interesante $F$. Llamemos a este arreglo $B$. Sea $|B|$ la longitud del array $B$. Supongamos que $B$ tiene indexación basada en $1$. Entonces la función $F$ se puede calcular siguiendo el código.
+
+\lstinputlisting[language=C++]{codes/functionF.cpp}
+
+\nl
+
+\textbf{Entrada:} La primera línea de la entrada contiene un entero $T$ que indica el número de casos de prueba. La descripción de los casos de prueba $T$ a continuación. La primera línea de cada caso de prueba contiene un único entero $N$ que denota el número de los elementos en una array dada. La siguiente línea contiene $N$ números que indican los elementos de una matriz dada. La tercera línea contiene un único entero $M$ que indica el número de consultas que Chef desea ejecutar. Cada una de las siguientes $M$ líneas describe una única consulta en el formato dado en la declaración.
+
+\nl
+
+\textbf{Salida:} Para cada consulta del primer tipo, obtenga una sola línea que contenga un solo entero: la respuesta para esta consulta.
+
+\nl
+
+\textbf{Ejemplo de Entrada:}
+
+\nl
+
+\begin{tabular}{|c|c|c|c|c|}
+	\hline 1 &  &  &  &  \\ 
+	\hline 5 &  &  &  &  \\ 
+	\hline 1 & 1 & 2 & 1 & 3 \\ 
+	\hline 5 &  &  &  &  \\ 
+	\hline 1 & 1 & 5 &  &  \\ 
+	\hline 1 & 2 & 4 &  &  \\ 
+	\hline 2 & 2 & 3 &  &  \\ 
+	\hline 1 & 1 & 5 &  &  \\ 
+	\hline 2 & 3 & 3 &  &  \\ 
+	\hline 
+\end{tabular} 
+
+\nl
+
+\textbf{Ejemplo de Salida:}
+
+\nl
+
+\begin{tabular}{|c|}
+	\hline 4 \\ 
+	\hline 3 \\ 
+	\hline 4 \\ 
+	\hline 
+\end{tabular} 
+
+\nl
+
+\subsubsection{Solución}
+
+\textbf{Explicación:} Vamos a utilizar treap para resolver este problema. Primero veamos los valores almacenados en un nodo.
+
+\begin{itemize}
+	\item Val: Para mantener el valor del nodo.
+	\item Cnt: para contar el número de nodos en el árbol.
+	\item Prior: para mantener la prioridad del nodo [que es parte de la estructura de datos de treap]
+	\item Lval: para mantener el valor del nodo más a la izquierda del árbol.
+	\item Rval: para mantener el valor del nodo más a la derecha del árbol.
+	\item Ans: Para calcular la respuesta para el árbol.
+	\item Ltree: Mantiene un puntero al subárbol izquierdo.
+	\item Rtree: mantiene un puntero al subárbol derecho.	
+\end{itemize}
+
+Llamemos puntero a esta estructura como estructura de árbol.
+
+\nl
+
+El único desafío que queda en este problema es cómo actualizar los datos en operaciones de división y mezcla.
+
+\nl
+
+Primero asumamos que podemos hacerlo y procedamos a dar a nuestro algoritmo guardándolo como una caja negra. Le haremos una visita de nuevo.
+
+\nl
+
+\textbf{Operación de informe:} Divida la raíz en 3 árboles $t_1$, $t_2$ y $t_3$, de modo que $t_1$ contenga el nodo de $1$ a $l-1$, $t_2$ contenga el nodo de $l$ a $r$, y $t_3$ contenga el nodo de $r + 1$ a $N$. Finalmente, después de responder a la consulta del árbol $t_2$, devolvemos nuestra respuesta y mezclamos los árboles de vuelta.
+
+\nl
+
+\textbf{Operación de actualización:} Dividiremos el árbol en 3 partes $t_1$, $t_2$ y $t_3$, de modo que $t_1$ contenga el nodo de $1$ a $l-1$, $t_2$ contenga el nodo de $l$ a $r$, y $t_3$ contenga el nodo de $r + 1$ a $N$. Cuando mezclamos los árboles, mezclaremos $t_2$ y $t_1$ y luego esto se mezclará con $t_3$. [Cambiando los árboles $t_1$ y $t_2$ que era necesario]
+
+\nl
+
+Ahora es el momento de introducir las funciones de división y fusión.
+
+\nl
+
+\textbf{Operación de árbol dividido:} Encuentre el número de vértices en el subárbol izquierdo [llamémoslo $cur\_add$]. Si $cur\_add$ es mayor o igual que Key, entonces dividimos el subárbol izquierdo, de lo contrario, dividimos el subárbol derecho.
+
+\nl
+
+\textbf{Operación del árbol de fusión:} Si la prioridad del subárbol izquierdo es mayor que la prioridad del subárbol derecho, la raíz del árbol se elegirá del subárbol izquierdo.
+
+\nl
+
+\textbf{Fuente:} \href{https://www.codechef.com/problems/CHEFC}{www.codechef.com/problems/CHEFC}
+
+\subsection{Lucy y Palíndromos}
+
+\subsubsection{Descripción}
+
+Lucy había aprendido recientemente sobre los palíndromos. Como probablemente sepas, palíndromo es una cadena que se lee de la misma manera en ambas direcciones, es decir, de izquierda a derecha o de derecha a izquierda. Por ejemplo, las cadenas “radar” y “oro” son palíndromos, al mismo tiempo, las cadenas “hola” y “mundo” no lo son.
+
+\nl
+
+Hay una cadena de $N$ letras latinas. Lucy te pide que respondas las siguientes consultas:
+
+\begin{itemize}
+	\item $1 L R$: invierta la subcadena del L-ésimo al R-ésimo carácter en indexación en 1 inclusivo.
+	\item $2 L R$: calcula el número de palíndromos distintos que se pueden obtener permutando caracteres de la $L$ a la $R$ en el orden arbitrario (ignorando todos los demás caracteres de la cadena).
+\end{itemize}
+
+\textbf{Entrada:} La primera línea de entrada consta de dos enteros separados por espacios $N$ y $M$: la longitud de la cadena y el número de consultas. La segunda línea consta de $N$ caracteres del conjunto ${'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j' }$, describiendo la cadena. Entonces, $M$ consultas siguen. Cada consulta se da en una de las siguientes formas:
+
+\begin{itemize}
+	\item $1 L R$: invierta la subcadena de la $L$ a la $R$ a la letra $R$.
+	\item $2 L R$: calcula el número de palíndromos distintos que se pueden obtener permutando caracteres de la $L$ a la $R$ en el orden arbitrario, módulo $10^9 + 7$ (ignorando todos los demás caracteres).
+\end{itemize}
+
+\textbf{Salida:} Para cada consulta de tipo 2, la respuesta en lineas separadas.
+
+\begin{multicols}{2}
+	\begin{tabular}{|c|}
+		\hline Entrada\\ 
+		\hline 7 4\\
+		abacaba\\
+		2 1 7\\
+		2 2 3\\
+		1 1 2\\
+		2 2 3\\
+		\hline 
+	\end{tabular} 
+	\begin{tabular}{|c|}
+		\hline Salida\\ 
+		\hline 3\\
+		0\\
+		1\\
+		\hline 
+	\end{tabular}
+\end{multicols}
+
+\subsubsection{Solución}
+
+Consideremos el siguiente problema: se le da el número de ocurrencias de cada símbolo y ahora se le pide que calcule el número de palíndromos diferentes que se pueden obtener permutando todas estas letras de alguna manera. Consideremos que la i-ésima letra del alfabeto aparece $A[i]$ veces, es decir, $a$ aparece $A[1]$ veces, $b$ aparece $A[2]$ veces, y así sucesivamente. Entonces, podemos hacer algunas observaciones. Al principio, si $A[]$ contiene más de un número impar (es decir, hay dos letras que ocurren un número impar de veces), entonces es imposible crear un palíndromo. Entonces, en este caso la respuesta es cero. De lo contrario, si hay una de esas letras, esta letra será el “centro” del palíndromo, por lo que la colocamos en el centro y disminuimos el número de estas letras. Ahora, $A[]$ contiene solo números pares. Es un hecho bien conocido que saber la longitud del palíndromo, llamémoslo $K$, y las primeras $\frac{k + 1}{2}$ letras del mismo, es trivial reconstruirlo. Además, no es difícil ver que el número de apariciones de cada letra en la mitad izquierda de una cadena del palíndromo es igual al número de ocurrencias de cada letra en la mitad derecha de una cadena del palíndromo. Sobre esta base, solo tenemos que calcular el número de formas diferentes de colocar $\frac{k + 1}{2}$ letras de $10$ tipos (es decir, $a$ a $i$), donde se conoce la cantidad de letras de cada tipo. Es un problema combinatorio bien conocido y la respuesta será $((K + 1) / 2)! / ((A [1] / 2)! * (A [2] / 2)! * ... * (A [ 10] / 2)!)$. Se le pide que muestre el resultado en un número primo, de modo que pueda usar un truco de cálculo inverso multiplicativo modular conocido para calcular la respuesta. Con una implementación adecuada, la complejidad general de una sola consulta de este tipo será O (alfabeto).
+
+\nl
+
+Así que ahora, en la segunda subtarea puede realizar todas las operaciones de una manera sencilla. Cuando necesite revertir la cadena, puede hacerlo en tiempo $O(N)$. Para responder a las consultas de otro tipo, puede calcular la matriz $A[]$ y luego resolver el problema en complejidad $O(alfabeto)$, que de hecho es muy rápida. Entonces, de esta manera obtenemos la solución $O(M * N * alfabeto)$.
+
+\nl
+
+Pero para resolver el problema más eficientemente se necesita usar alguna estructura de datos avanzada como Treap, que parece la forma más fácil de resolver el problema. Las consultas que Treap debe mantener son bastante estándar para esta estructura, es decir, revertir el segmento y contar el número de ocurrencias de algunas letras, por lo que no debería causar ningún problema.
+
+\nl
+
+\textbf{Código:} \href{https://gist.github.com/leynier/6498f0628613a5aaa6d3621125343401}{gist.github.com/leynier/6498f0628613a5aaa6d3621125343401}
+
+\nl
+
+\textbf{Fuente:} \href{https://www.codechef.com/problems/PALINDR}{www.codechef.com/problems/PALINDR}
+
+\newpage
+
+\nocite{*}
+\bibliographystyle{unsrt}
+\bibliography{cartesian_tree}
 
 \end{document}
