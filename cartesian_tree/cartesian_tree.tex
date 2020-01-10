@@ -59,13 +59,17 @@
 
 \newpage
 
-\section{¿Qué es un Árbol Cartesiano?}
+\section{Árbol Cartesiano}
+
+\subsection{¿Qué es un Árbol Cartesiano?}
 
 \nl
 
 \begin{definition}
 	Un \textbf{\ct}(Cartesian Tree) es un árbol binario derivado de una secuencia de números.
 \end{definition}
+
+\subsection{Teorema de la Unicidad}
 
 \begin{theorem}
 	El \ct derivado de una secuencia de números distintos es único si se definen las siguientes propiedades.
@@ -80,7 +84,7 @@
 \begin{itemize}
 	\item \textbf{Case base:} Para $n = 1$ el \ct es único ya que contiene un solo nodo.
 	\item \textbf{Hipótesis:} Si para toda secuencia de tamaño $m < n$ se cumple que el \ct derivado de ella es único entonces para toda secuencia de números de tamaño $n$ se cumple que el \ct derivado de ella es único.
-	\item Por a la \textbf{Propiedad 1} existe una bisección entre los elementos de la secuencia y los nodos del árbol.
+	\item Por a la \textbf{Propiedad 1} existe una biyección entre los elementos de la secuencia y los nodos del árbol.
 	\item Por a la \textbf{Propiedad 3} la raíz del árbol tiene que ser el elemento de menor valor en la secuencia. Sea $k$ la posición del elemento en la secuencia.
 	\item Por a la \textbf{Propiedad 2} el subárbol resultante de tomar el hijo izquierdo de la raíz es el \ct de la secuencia desde $1$ hasta $k - 1$. Si la raíz no tuviera hijo izquierdo es porque $k = 1$. Luego por hipótesis de inducción este subárbol cartesiano es único para la secuencia desde $1$ hasta $k - 1$.
 	\item Por a la \textbf{Propiedad 2} el subárbol resultante de tomar el hijo derecho de la raíz es el \ct de la secuencia desde $k + 1$ hasta $n$. Si la raíz no tuviera hijo derecho es porque $k = n$. Luego por hipótesis de inducción este subárbol cartesiano es único para la secuencia desde $k + 1$ hasta $n$.
@@ -88,6 +92,10 @@
 \end{itemize}
 
 Si una secuencia contiene números repetidos, el \ct se puede definir determinando una regla de desempate (por ejemplo, determinando que el primer número repetido sea tratado como menor que su homólogo en la secuencia) antes de aplicar las propiedades anteriores.
+
+\subsection{Construcción de un Árbol Cartesiano}
+
+\nl
 
 \begin{observation}
 	Cada camino $v_1, v_2, ... , v_k$ desde la raíz hasta una hoja en un \ct forma una secuencia monótona creciente.
@@ -103,6 +111,8 @@ Denotaremos como $CT(1..n)$ al \ct derivado de la secuencia de números $S[1..n]
 	El padre $v$ del nodo $i$ en el $CT(1..i)$ es uno de los nodos del \rmp del $CT(1..i-1)$ a menos que $i$ sea la raíz de $CT(1..i)$
 \end{lemma}
 
+\newpage
+
 \proof Por definición, si y solo si $S[i]$ es el valor más pequeño en $S[1..i]$, $i$ es la raíz de $CT(1..i)$. Si $S[i]$ no es el más pequeño en $S[1..i]$, entonces, existe un nodo $v$ en $CT(1..i)$ que también es un nodo en $CT(1..i-1)$ que es padre de $i$ en $CT(1..i)$. Por contradicción, asumimos que el padre $v$ de $i$ en $CT(1..i)$ no está en el \rmp del $CT(1..i-1)$. Entonces por la Observación 1 el camino desde la raíz a $v$, entonces debe existir un nodo $v'$ en el \rmp del $CT(1..i-1)$ tal que $v < v' < i$ y $S[i] > S[v] > S[v']$. Pero entonces, por definición, $v'$ tiene que estar en el subárbol izquierdo de $i$ en el $CT(1..i)$ y por lo tanto $S[v']$ tiene que ser menor que $S[i]$, lo cual es una contradicción.
 
 \begin{observation}
@@ -117,13 +127,21 @@ Denotaremos como $CT(1..n)$ al \ct derivado de la secuencia de números $S[1..n]
 
 \nl
 
+\subsubsection{Implementación}
+
+\nl
+
 \textbf{Código 1} Código para construir un \ct a partir de una secuencia de números en tiempo lineal.
 
 \lstinputlisting[language=Python]{codes/cartesian_tree.py}
 
-Por la naturaleza binaria del \ct resulta natural utilizarlos como árbol binario de búsqueda para una secuencia ordenada de valores. Sin embargo, definir un árbol binario basado en los mismo valores que forman las llaves de un árbol binario de búsqueda puede no funcionar bien pues el \ct de una secuencia ordenada no es mas que una rama, comenzando en el punto mas a la izquierda y una búsqueda binaria en ese árbol se degenera a una búsqueda secuencial en dicha rama. Una solución para esto es construir arboles de búsquedas menos degenerados seleccionando valores de prioridad para cada llave que son distintos que la llaves, ordenando la entrada por las llaves y utilizando la secuencia correspondiente de prioridades para general el \ct.\\
+\subsection{Conclusión}
 
-Raimund Seidel y Cecilia Aragon en 1996 en su articulo Randomized Search Trees sugieren el uso de números aleatorios como prioridades y llamaron a esta estructura de datos como Treap: la mezcla entre árbol (Treap) y Heap (montículo). Si las prioridades de cada llave se eligen de forma aleatoria e independiente de cuando la llaves se inserta en el árbol, entonces el \ct resultante tendrá las mismas propiedades que un árbol aleatorio binario de búsqueda los cuales han sido muy estudiados y se conoce que presentan un buen comportamiento como arboles de búsqueda pues tienen una profundidad logarítmica con una alta probabilidad.
+\nl
+
+Por la naturaleza binaria del \ct resulta natural utilizarlos como árbol binario de búsqueda para una secuencia ordenada de valores. Sin embargo, definir un árbol binario basado en los mismo valores que forman las llaves de un árbol binario de búsqueda puede no funcionar bien pues el \ct de una secuencia ordenada no es mas que una rama, comenzando en el punto mas a la izquierda y una búsqueda binaria en ese árbol se degenera a una búsqueda secuencial en dicha rama. Una solución para esto es construir árboles de búsquedas menos degenerados seleccionando valores de prioridad para cada llave que son distintos que la llaves, ordenando la entrada por las llaves y utilizando la secuencia correspondiente de prioridades para general el \ct.\\
+
+Raimund Seidel y Cecilia Aragon en 1996 en su artículo Randomized Search Trees sugieren el uso de números aleatorios como prioridades y llamaron a esta estructura de datos como Treap: la mezcla entre árbol (Treap) y Heap (montículo). Si las prioridades de cada llave se eligen de forma aleatoria e independiente de cuando la llaves se inserta en el árbol, entonces el \ct resultante tendrá las mismas propiedades que un árbol aleatorio binario de búsqueda los cuales han sido muy estudiados y se conoce que presentan un buen comportamiento como árboles de búsqueda pues tienen una profundidad logarítmica con una alta probabilidad.
 
 \section{Treap}
 
@@ -197,6 +215,7 @@ Ahora consideremos la implementación de varias operaciones en Treap implícito:
 	\item \textbf{Encuentra suma / mínimo, etc. en el intervalo:} Primero, cree un campo adicional $F$ en la estructura del elemento para almacenar el valor de la función objetivo para el subárbol de este nodo. Este campo es fácil de mantener de manera similar al mantenimiento de tamaños de subárboles: cree una función que calcule este valor para un nodo basándose en valores para sus hijos y agregue llamadas de esta función al final de todas las funciones que modifican el árbol.
 	En segundo lugar, necesitamos saber cómo procesar una consulta para un intervalo arbitrario $[A, B]$. Para obtener una parte del árbol que corresponde al intervalo $[A, B]$, necesitamos llamar a $Split(T, T_1, T_2, A)$, y luego a $Split(T_2, T_2, T_3, B - A + 1)$: después de este $T_2$ constará de todos los elementos en el intervalo $[A, B]$, y sólo de ellos. Por lo tanto, la respuesta a la consulta se almacenará en el campo $F$ de la raíz de $T_2$. Después de responder la consulta, el árbol debe restaurarse llamando a combinación $(T, T1, T2)$ y $Combinación(T, T, T_3)$.
 	\item \textbf{Adición en el intervalo:} Actuamos de forma similar al párrafo anterior, pero en lugar del campo $F$, almacenaremos un campo agregado que contendrá el valor agregado para el subárbol. Antes de realizar cualquier operación, debemos hacer "push" de este valor correctamente, es decir, cambiar $T \rightarrow L \rightarrow add$ y $T \rightarrow R \rightarrow add$, y limpiar el $add$ en el nodo principal. De esta manera, después de cualquier cambio en el árbol, la información no se perderá.
+	\newpage
 	\item \textbf{Invertir en el intervalo:} De nuevo, esto es similar a la operación anterior, tenemos que agregar el indicador booleano $rev$ y establecerlo en verdadero cuando el subárbol del nodo actual debe invertirse. $Pushing$ este valor es un poco complicado: cambiamos los elementos secundarios de este nodo y establecemos este indicador en verdadero para ellos.
 \end{itemize}
 
@@ -314,7 +333,7 @@ Ahora es el momento de introducir las funciones de división y fusión.
 
 \textbf{Fuente:} \href{https://www.codechef.com/problems/CHEFC}{www.codechef.com/problems/CHEFC}
 
-\subsection{Lucy y Palíndromos}
+\subsection{Lucy y los Palíndromos}
 
 \subsubsection{Descripción}
 
@@ -360,7 +379,7 @@ Hay una cadena de $N$ letras latinas. Lucy te pide que respondas las siguientes 
 
 \subsubsection{Solución}
 
-Consideremos el siguiente problema: se le da el número de ocurrencias de cada símbolo y ahora se le pide que calcule el número de palíndromos diferentes que se pueden obtener permutando todas estas letras de alguna manera. Consideremos que la i-ésima letra del alfabeto aparece $A[i]$ veces, es decir, $a$ aparece $A[1]$ veces, $b$ aparece $A[2]$ veces, y así sucesivamente. Entonces, podemos hacer algunas observaciones. Al principio, si $A[]$ contiene más de un número impar (es decir, hay dos letras que ocurren un número impar de veces), entonces es imposible crear un palíndromo. Entonces, en este caso la respuesta es cero. De lo contrario, si hay una de esas letras, esta letra será el “centro” del palíndromo, por lo que la colocamos en el centro y disminuimos el número de estas letras. Ahora, $A[]$ contiene solo números pares. Es un hecho bien conocido que saber la longitud del palíndromo, llamémoslo $K$, y las primeras $\frac{k + 1}{2}$ letras del mismo, es trivial reconstruirlo. Además, no es difícil ver que el número de apariciones de cada letra en la mitad izquierda de una cadena del palíndromo es igual al número de ocurrencias de cada letra en la mitad derecha de una cadena del palíndromo. Sobre esta base, solo tenemos que calcular el número de formas diferentes de colocar $\frac{k + 1}{2}$ letras de $10$ tipos (es decir, $a$ a $i$), donde se conoce la cantidad de letras de cada tipo. Es un problema combinatorio bien conocido y la respuesta será $((K + 1) / 2)! / ((A [1] / 2)! * (A [2] / 2)! * ... * (A [ 10] / 2)!)$. Se le pide que muestre el resultado en un número primo, de modo que pueda usar un truco de cálculo inverso multiplicativo modular conocido para calcular la respuesta. Con una implementación adecuada, la complejidad general de una sola consulta de este tipo será O (alfabeto).
+Consideremos el siguiente problema: se le da el número de ocurrencias de cada símbolo y ahora se le pide que calcule el número de palíndromos diferentes que se pueden obtener permutando todas estas letras de alguna manera. Consideremos que la i-ésima letra del alfabeto aparece $A[i]$ veces, es decir, $a$ aparece $A[1]$ veces, $b$ aparece $A[2]$ veces, y así sucesivamente. Entonces, podemos hacer algunas observaciones. Al principio, si $A[]$ contiene más de un número impar (es decir, hay dos letras que ocurren un número impar de veces), entonces es imposible crear un palíndromo. Entonces, en este caso la respuesta es cero. De lo contrario, si hay una de esas letras, esta letra será el “centro” del palíndromo, por lo que la colocamos en el centro y disminuimos el número de estas letras. Ahora, $A[]$ contiene sólo números pares. Es un hecho bien conocido que saber la longitud del palíndromo, llamémoslo $K$, y las primeras $\frac{k + 1}{2}$ letras del mismo, es trivial reconstruirlo. Además, no es difícil ver que el número de apariciones de cada letra en la mitad izquierda de una cadena del palíndromo es igual al número de ocurrencias de cada letra en la mitad derecha de una cadena del palíndromo. Sobre esta base, solo tenemos que calcular el número de formas diferentes de colocar $\frac{k + 1}{2}$ letras de $10$ tipos (es decir, $a$ a $i$), donde se conoce la cantidad de letras de cada tipo. Es un problema combinatorio bien conocido y la respuesta será $((K + 1) / 2)! / ((A [1] / 2)! * (A [2] / 2)! * ... * (A [ 10] / 2)!)$. Se le pide que muestre el resultado en un número primo, de modo que pueda usar un truco de cálculo inverso multiplicativo modular conocido para calcular la respuesta. Con una implementación adecuada, la complejidad general de una sola consulta de este tipo será O (alfabeto).
 
 \nl
 

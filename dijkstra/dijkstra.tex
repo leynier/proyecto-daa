@@ -95,7 +95,7 @@ Existen varias variantes del problema de los caminos más cortos
 	\item Entre cualquier par de vértices: Buscar el camino más corto desde cualquier vértice $u \in V$ hasta cualquier vértice $v \in V$. Aunque podemos resolver este variante del problema ejecutando un algoritmo de fuente única una vez desde cada vértice, generalmente podemos resolverlo más rápido.
 \end{itemize}
 
-\subsection{Subestructura optima de los caminos más cortos}
+\subsection{Subestructura óptima de los caminos más cortos}
 
 \nl
 
@@ -122,7 +122,7 @@ Por otro lado, si el grafo contiene ciclos con peso negativo alcanzables desde l
 
 \nl
 
-Muy a menudos es necesario calcular el camino más corto y no solo su peso. Esto se puede lograr manteniendo para cada vértice $v \in V$ un predecesor $v.p$ que es otro vértice o nulo. 
+Muy a menudos es necesario calcular el camino más corto y no sólo su peso. Esto se puede lograr manteniendo para cada vértice $v \in V$ un predecesor $v.p$ que es otro vértice o nulo. 
 
 \nl
 
@@ -158,7 +158,7 @@ Muchos de los algoritmos para resolver el problema de los caminos más cortos ut
 
 \nl
 
-El proceso de inicialización del los valores estimados de los caminos mas cortos $v.d$ y los predecesores $v.p$ se realizara mediante el siguiente procedimiento cuya complejidad temporal es $O(|V|)$.
+El proceso de inicialización del los valores estimados de los caminos más cortos $v.d$ y los predecesores $v.p$ se realizara mediante el siguiente procedimiento cuya complejidad temporal es $O(|V|)$.
 
 \nl
 
@@ -226,7 +226,7 @@ y por tanto, la invariante es mantenida.
 
 \nl
 
-Para ver que el valor de $v.d$ nunca cambia despues que $v.d = \delta(s, v)$, hay que notar que ha alcanzado si cota inferior, $v.d$ no pude disminuir porque $v.d \geqslant \delta(s, v)$, y este no puede aumentar porque los pasos de relajación no aumentan los valores de $d$.
+Para ver que el valor de $v.d$ nunca cambia después que $v.d = \delta(s, v)$, hay que notar que ha alcanzado si cota inferior, $v.d$ no pude disminuir porque $v.d \geqslant \delta(s, v)$, y este no puede aumentar porque los pasos de relajación no aumentan los valores de $d$.
 
 % Corollary 24.12 (No-path property)
 % Corolario 1
@@ -293,7 +293,7 @@ En los siguientes lemas mostramos que una vez que una secuencia de relajaciones 
 	Sea un grafo ponderado y dirigido $G = (V, E)$ con función de peso $w: E \rightarrow \mathbb{R}$, sea $s \in V$ un vértice fuente y supongamos que $G$ no contiene ciclos de peso negativos que sean accesibles desde $s$. Luego, una vez que el grafo se inicializa con el \textbf{Código 1}, el subgrafo predecesor $G_p$ forma un árbol con raíz $s$, y cualquier secuencia de pasos de relajación en las aristas de $G$ mantiene esta propiedad como invariante.
 \end{lemma}
 
-\proof Inicialmente, el único vértice en $G_p$ es el vértice fuente $s$, el lema es verdadero. Consideremos un subgrafo de predecesores $G_p$ que surge después de una secuencia de pasos de relajación. Probaremos primero que el grafo $G_p$ es acíclico. Suponiendo para llegar a una contradicción que algún paso de relajación creo un ciclo en $G_p$. Sea $c = (v_0, v_1, ..., v_k)$ el ciclo, donde $v_k = v_0$. Entonces, $v_{i}.p = v_{i-1}$ para $i = 1, 2, ..., k$ y, sin perdida de generalidad, asumiremos que el paso de relajación que creo en ciclo fue sobre la arista $(v_{k-1}, v_k)$.
+\proof Inicialmente, el único vértice en $G_p$ es el vértice fuente $s$, el lema es verdadero. Consideremos un subgrafo de predecesores $G_p$ que surge después de una secuencia de pasos de relajación. Probaremos primero que el grafo $G_p$ es acíclico. Suponiendo para llegar a una contradicción que algún paso de relajación creó un ciclo en $G_p$. Sea $c = (v_0, v_1, ..., v_k)$ el ciclo, donde $v_k = v_0$. Entonces, $v_{i}.p = v_{i-1}$ para $i = 1, 2, ..., k$ y, sin pérdida de generalidad, asumiremos que el paso de relajación que creó en ciclo fue sobre la arista $(v_{k-1}, v_k)$.
 
 \nl
 
@@ -350,7 +350,7 @@ Luego si, después de haber realizado una secuencia de pasos de relajación, a t
 	Sea un grafo ponderado y dirigido $G = (V, E)$ con función de peso $w: E \rightarrow \mathbb{R}$, sea $s \in V$ un vértice fuente y supongamos que $G$ no contiene ciclos de peso negativos que sean accesibles desde $s$. El grafo se inicializó con el \textbf{Código 1} y luego se aplicó cualquier secuencia de pasos de relajación en las aristas de $G$ que produjo que $v_d = \delta(s, v) \; \forall v \in V$. Luego, el subgrafo predecesor $G_p$ es un árbol de caminos más cortos con $s$ como raíz.
 \end{lemma}
 
-\proof Debemos probar que las tres propiedades de los árboles de caminos más cortos que figuran en la \textbf{Definición 5} se mantienen para $G_p$. Para demostrar la primera propiedad, debemos demostrar que $V_p$ es el conjunto de vértices alcanzables desde $s$. Por definición, el peso de camino más corto $\delta(s, v)$ es finito si y solo si $v$ es alcanzable desde $s$, y por lo tanto los vértices que son alcanzables desde $s$ son exactamente aquellos con valores $d$ finitos. Pero a un vértice $v$ se le ha asignado un valor finito para $v.d$ si y solo si $v.p$ no es nulo. Por lo tanto, los vértices en $V_p$ son exactamente los alcanzables desde $s$.
+\proof Debemos probar que las tres propiedades de los árboles de caminos más cortos que figuran en la \textbf{Definición 5} se mantienen para $G_p$. Para demostrar la primera propiedad, debemos demostrar que $V_p$ es el conjunto de vértices alcanzables desde $s$. Por definición, el peso de camino más corto $\delta(s, v)$ es finito si y sólo si $v$ es alcanzable desde $s$, y por lo tanto los vértices que son alcanzables desde $s$ son exactamente aquellos con valores $d$ finitos. Pero a un vértice $v$ se le ha asignado un valor finito para $v.d$ si y sólo si $v.p$ no es nulo. Por lo tanto, los vértices en $V_p$ son exactamente los alcanzables desde $s$.
 
 \nl
 
@@ -373,21 +373,27 @@ Así, $w(p) \leqslant \delta(s, v_k)$. Ya que $\delta(s, v_k)$ es una cota míni
 
 \subsection{Explicación}
 
+\nl
+
 El algoritmo de Dijkstra resuelve el problema de los caminos más cortos en un grafo $G = (V, E)$ dirigido y ponderado para el caso en que todas las aristas sean de peso no negativos. El algoritmo mantiene un conjunto de vértices $S$ donde el peso del camino más corto desde el vértice fuente $s$ ya está calculado. El algoritmo repetidamente selecciona el vértice $u \in V - \{s\}$ con el menor peso estimado del camino más corto. Añade $u$ a $S$ y relaja todas las aristas que salen de $u$.
 
 \nl
 
 En la siguiente implementación se utiliza una cola con prioridad de mínimos Q para los vértices cuyas llaves son los valores $d$.
 
+\newpage
+
 \textbf{Código 1} Proceso de inicialización
 
 \lstinputlisting[language=Python]{codes/dijkstra.py}
+
+\nl
 
 Esta es la implementación clásica, más adelante veremos otra implementación ligeramente diferente y totalmente funcional en Python 3.
 
 \nl
 
-La línea 2 inicializa los valores de $d$ y $p$ de la manera usual y en la línea 3 inicializa el conjunto $S$ vacío. El algoritmo mantiene el invariante de $Q = V - S$ al comienzo de cada iteración del ciclo $while$ de las líneas 5 a 9. En la linea 4 inicializa la cola con prioridad $Q$ conteniendo todos los vértices de $V$, ya que $S = \emptyset$ en ese momento, entonces la invariante es verdadera en la linea 4. Cada iteración del ciclo en la linea 6 se extra un vértice $v$ de $Q$ y en la linea 7 se añade al conjunto $S$, provocando que se mantenga la invariante. El vértice $u$, por lo tanto, tiene la menor estimación del peso de camino más corto de cualquier vértice en $V - S$. Entonces, las lineas 8-9 relajan las aristas que salen del vértice $u$, actualizando así la estimación del peso $v.d$ y el predecesor $v.p$ si se puede mejorar el camino más corto hasta $v$ encontrado hasta el momento mediante la arista $(u, v)$.
+La línea 2 inicializa los valores de $d$ y $p$ de la manera usual y en la línea 3 inicializa el conjunto $S$ vacío. El algoritmo mantiene el invariante de $Q = V - S$ al comienzo de cada iteración del ciclo $while$ de las líneas 5 a 9. En la línea 4 inicializa la cola con prioridad $Q$ conteniendo todos los vértices de $V$, ya que $S = \emptyset$ en ese momento, entonces la invariante es verdadera en la línea 4. Cada iteración del ciclo en la línea 6 se extrae un vértice $v$ de $Q$ y en la línea 7 se añade al conjunto $S$, provocando que se mantenga la invariante. El vértice $u$, por lo tanto, tiene la menor estimación del peso de camino más corto de cualquier vértice en $V - S$. Entonces, las líneas 8-9 relajan las aristas que salen del vértice $u$, actualizando así la estimación del peso $v.d$ y el predecesor $v.p$ si se puede mejorar el camino más corto hasta $v$ encontrado hasta el momento mediante la arista $(u, v)$.
 
 \nl
 
@@ -399,7 +405,7 @@ Observe que el algoritmo nunca inserta vértices en Q después de la línea 4 y 
 	El algoritmo de Dijkstra ejecutado sobre un grafo $G = (V,E) $ dirigido y ponderado, con una función no negativa $w$ y una fuente $s$, termina con $u.d = \delta(s, u) \; \forall u \in V$.
 \end{theorem}
 
-\proof Probaremos que al comienzo de cada iteración del ciclo $while$ de las lineas $5-9$, $v.d = \delta(s, v) \; v \in S$.
+\proof Probaremos que al comienzo de cada iteración del ciclo $while$ de las líneas $5-9$, $v.d = \delta(s, v) \; v \in S$.
 
 \nl
 
@@ -409,7 +415,7 @@ Es suficiente demostrar que $\forall \; u \in V$ en el momento en que $u$ es añ
 
 Inicialmente $S = \emptyset$ y por tanto la invariante se cumple. Demostraremos que en cada iteración, $u.d = \delta(s,u)$ para el vértice $u$ agregado al conjunto $S$. Para lograr una contradicción, sea $u$ el primer vértice con $u.d \neq \delta(s,u)$ cuando este es añadido a $S$.
 
-\newpage
+\nl
 
 Centraremos nuestra atención en la situación al comienzo de la iteración del ciclo $while$ en el que $u$ se agrega a $S$ y daremos pie a una contradicción de que $u.d = \delta(s, u)$ en ese momento buscando un camino más corto de $s$ a $u$. Debemos tener que $u \neq s$ porque $s$ es el primer vértice añadido a $S$ y $s.d = \delta(s, s) = 0$ en ese momento. Debido a que $u \neq s$ tenemos que $S \neq \emptyset$ justo antes de añadir $u$ a $S$. Tenemos que debe existir un camino desde $s$ a $u$, de otra manera $u.d = \delta(s, u) = \infty$ por el Corolario 1, lo que violaría nuestra suposición de que $u.d \neq \delta(s, u)$. Como hay al menos existe un camino, entonces existe un camino más corto $p$ entre $s$ y $u$.
 
@@ -417,7 +423,7 @@ Centraremos nuestra atención en la situación al comienzo de la iteración del 
 
 Antes de añadir $u$ a $S$, el camino $p$ que conecta los vértices en $S$, es decir $s$, a los vértices de $V - S$ es decir $u$. Consideremos el primer vértice $y$ en $p$ tal que $y \in V - S$, sea $x \in S$ el predecesor de $y$ en el camino $p$. Ya que, se puede descomponer el camino $p$ en $ s \stackrel{p_1}{\rightsquigarrow} x \rightarrow y \stackrel{p_2}{\rightsquigarrow} u $ (cualquiera de las rutas $p_1$ o $p_2$ puede no tener aristas). Podemos afirmar que $ y.d = \delta(s, y) $ cuando $u$ es añadido a $S$. Para esto demostraremos que $x \in S$, por tanto, como asumimos que $u$ es el primer vértice para el cual $u.d \neq \delta(s, u)$, cuando dicho vértice se adiciona a $S$, se tenía que $x,d = \delta(s, x)$. Cuando $x$ se insertó en $S$, la arista $(x, y)$ y en ese momento se hizo $y.d = \delta(s, y)$ por el Lema 5.
 
-\nl
+\newpage
 
 A partir de lo anterior lleguemos a la contradicción para probar que $u.d = \delta(s, u)$. Como $y$ esta antes que $u$ en $p$ (camino más corto desde $s$ a $u$) donde todos las aristas tienen pesos no negativos, entonces, $\delta(s, y) < \delta(s, u)$ y por lo tanto:
 
@@ -453,7 +459,7 @@ Entonces, la complejidad temporal del algoritmo de Dijkstra depende de como se i
 
 \nl
 
-Se puede lograr una complejidad temporal  $O(|V| \log(|V|) + |E|)$ implementando la cola con prioridad de mínimos con un Heap de Fibonacci. El coste amortizado de cada uno de los $|V|$ operaciones de $extract\_min$ son $O(\log|V|)$, y cada llamada $decrease\_key$, de las cuales hay como máximo $|E|$, toma solo $O(1)$ tiempo amortizado.
+Se puede lograr una complejidad temporal  $O(|V| \log(|V|) + |E|)$ implementando la cola con prioridad de mínimos con un Heap de Fibonacci. El coste amortizado de cada uno de los $|V|$ operaciones de $extract\_min$ son $O(\log|V|)$, y cada llamada $decrease\_key$, de las cuales hay como máximo $|E|$, toma sólo $O(1)$ tiempo amortizado.
 
 \nl
 
@@ -469,7 +475,7 @@ Históricamente, el desarrollo de los Heap de Fibonacci estuvo motivado por la o
 
 \subsubsection{Descripción}
 
-En Berland se estrenó una nueva película en ocasión del 14 de febrero. La locura por esta película estuvo muy presente entre los pueblos de la ciudad. Muchos de ellos decidieron ir al único cine de Berland. Como Berland está muy desarrollado, hay muchos edificios grandes (altos), incluido el cine. En cada edificio, excepto en el teatro, existe una persona (que quiere ver una película) o un taxista con su taxi. Como es muy tarde en la noche, cada conductor de taxi solo tendrá capacidad para un pasajero y también manejará para $T[i]$ horas (el viaje de regreso no está incluido). Se le dará la distancia entre el edificio $D [i]$ y la velocidad de cada taxista $S[i]$. Como soy el dueño de este teatro, ayúdame contándome la cantidad máxima de personas que veré en el teatro para la película. $N + P + 1$ edificio es mi teatro.
+En Berland se estrenó una nueva película en ocasión del 14 de febrero. La locura por esta película estuvo muy presente entre los pueblos de la ciudad. Muchos de ellos decidieron ir al único cine de Berland. Como Berland está muy desarrollado, hay muchos edificios grandes (altos), incluido el cine. En cada edificio, excepto en el teatro, existe una persona (que quiere ver una película) o un taxista con su taxi. Como es muy tarde en la noche, cada conductor de taxi sólo tendrá capacidad para un pasajero y también manejará para $T[i]$ horas (el viaje de regreso no está incluido). Se le dará la distancia entre el edificio $D [i]$ y la velocidad de cada taxista $S[i]$. Como soy el dueño de este teatro, ayúdame contándome la cantidad máxima de personas que veré en el teatro para la película. $N + P + 1$ edificio es mi teatro.
 
 \nl
 
@@ -479,7 +485,7 @@ En Berland se estrenó una nueva película en ocasión del 14 de febrero. La loc
 
 \textbf{Salida:} Número máximo de personas que visitarán mi teatro.
 
-\nl
+\newpage
 
 \textbf{Ejemplo de Entrada:}
 
@@ -509,23 +515,23 @@ En Berland se estrenó una nueva película en ocasión del 14 de febrero. La loc
 
 \nl
 
-\textbf{Explicación:} Dado un grafo, cada vértice representa un edificio y las aristas representan las carreteras que los conectan. En cada edificio existe un pasajero o un taxista, excepto en el cine. Cada conductor de taxi tomará solo un pasajero y conducirá por un tiempo limitado. Su tarea es calcular el número máximo de pasajeros que llegan al teatro. Dado, que cada pasajero quiere ir al teatro y puede acercarse a cualquier conductor de taxi.
+\textbf{Explicación:} Dado un grafo, cada vértice representa un edificio y las aristas representan las carreteras que los conectan. En cada edificio existe un pasajero o un taxista, excepto en el cine. Cada conductor de taxi tomará sólo un pasajero y conducirá por un tiempo limitado. Su tarea es calcular el número máximo de pasajeros que llegan al teatro. Dado, que cada pasajero quiere ir al teatro y puede acercarse a cualquier conductor de taxi.
 
 \nl
 
-\textbf{Idea:} Crear un grafo bipartito en el que el primer conjunto sea para los taxistas y el segundo para los pasajeros. Crear una arista entre un conductor de taxi y un pasajero, si y solo si, ese conductor de taxi puede dejar a ese pasajero en el teatro dentro de su tiempo de conducción. Puede utilizar cualquier camino más corto de una única fuente para este propósito. Después que tienes el grafo, solo necesitas encontrar emparejamiento máximo.
+\textbf{Idea:} Crear un grafo bipartito en el que el primer conjunto sea para los taxistas y el segundo para los pasajeros. Crear una arista entre un conductor de taxi y un pasajero, si y sólo si, ese conductor de taxi puede dejar a ese pasajero en el teatro dentro de su tiempo de conducción. Puede utilizar cualquier camino más corto de una única fuente para este propósito. Después que tienes el grafo, sólo necesitas encontrar emparejamiento máximo.
 
 \nl
 
-\textbf{Demostración:} La demostración se basa principalmente en el modelamiento del problema. Como lo mencionamos anteriormente el problema se modelara como un grafo bipartito.
+\textbf{Demostración:} La demostración se basa principalmente en el modelamiento del problema. Como lo mencionamos anteriormente el problema se modelará como un grafo bipartito.
 
 \nl
 
-Para cada posible combinación de viajes de taxistas con pasajeros hasta el cine existe un emparejamiento en el grafo bipartito. Pues para un viajes de un taxista especifico con un pasajero especifico, el pasajero se quedará en el cine por lo que no se montará en otro taxi y el taxista una vez lleve al pasajero al cine dejara de trabajar, por lo que se puede considerar una arista del emparejamiento, pues sus vértices no estarán en otra posible arista del emparejamiento (no estarán en ningún otro viaje).
+Para cada posible combinación de viajes de taxistas con pasajeros hasta el cine existe un emparejamiento en el grafo bipartito. Pues para un viajes de un taxista específico con un pasajero específico, el pasajero se quedará en el cine por lo que no se montará en otro taxi y el taxista una vez lleve al pasajero al cine dejará de trabajar, por lo que se puede considerar una arista del emparejamiento, pues sus vértices no estarán en otra posible arista del emparejamiento (no estarán en ningún otro viaje).
 
 \nl
 
-Ademas, para cada emparejamiento existe una posible combinación de viajes de taxistas con pasajeros hasta el cine. Pues un vértice representa a un taxista, el otro a un pasajero y la arista representa la posibilidad de que el taxista pueda llevar al pasajero hasta el cine, luego como es un emparejamiento, el taxista y el pasajero no participaran en ningún otro viaje.
+Además, para cada emparejamiento existe una posible combinación de viajes de taxistas con pasajeros hasta el cine. Pues un vértice representa a un taxista, el otro a un pasajero y la arista representa la posibilidad de que el taxista pueda llevar al pasajero hasta el cine, luego como es un emparejamiento, el taxista y el pasajero no participaran en ningún otro viaje.
 
 \nl
 
@@ -553,7 +559,7 @@ Se le proporciona un grafo conexo, no dirigido y ponderado con $N$ vértices y $
 
 \textbf{Salida:} Imprime una línea que contiene dos enteros: El primer entero es el número máximo de rutas óptimas que pueden pasar a través de los $k$ nodos seleccionados. El segundo entero representa el número de formas de seleccionar los $k$ nodos de modo que el número de rutas óptimas que pasan a través de ellos sea máximo. Este valor debe imprimirse módulo $10^9 +7$.
 
-\nl
+\newpage
 
 \textbf{Ejemplo de Entrada:}
 
@@ -590,10 +596,10 @@ Consideremos la siguiente notación:
 	\item Sea $cnt(u, v)$ la cantidad de caminos más cortos entre los vértices $u$ y $v$.
 \end{itemize}
 
-Denotaremos un conjunto ordenado de nodos $a_1, a_2, ..., a_p$ por $[a_1, a_2, ..., a_p]_u$ si y solo si $dist(u, a_1) < dist(u, a_2) < ... < dist(u, a_p)$.
+Denotaremos un conjunto ordenado de nodos $a_1, a_2, ..., a_p$ por $[a_1, a_2, ..., a_p]_u$ si y sólo si $dist(u, a_1) < dist(u, a_2) < ... < dist(u, a_p)$.
 
 \begin{lemma}
-	Hay un camino más corto entre los vértices $u$ y $v$ que pasa a través de $[a_1, a_2, ..., a_p]_u$ si y solo si $dist(u, v) = dist(u, a_1) + dist(a_1, a_2) + ... + dist(a_{p-1}, a_p) + dist(a_p, v)$.
+	Hay un camino más corto entre los vértices $u$ y $v$ que pasa a través de $[a_1, a_2, ..., a_p]_u$ si y sólo si $dist(u, v) = dist(u, a_1) + dist(a_1, a_2) + ... + dist(a_{p-1}, a_p) + dist(a_p, v)$.
 \end{lemma}
 
 El número de caminos más cortos a través de este conjunto de vértices es $cnt(u, v, [a_1, a_2, ..., a_p]_u) = cnt(u, a_1) + cnt(a_1, a_2) + ... + cnt(a_{p-1}, a_p) + cnt(a_p, v)$.
@@ -627,7 +633,7 @@ La primera respuesta de la salida será $dp_{K,P_N^{-1}}$.
 
 \subsubsection{Descripción}
 
-Es el cambio de año, por lo que Bash quiere enviar regalos a sus amigos. Hay $n$ ciudades en la región del Himalayan y están conectadas por $m$ carreteras bidireccionales. Bash vive en la ciudad $s$. Bash tiene exactamente un amigo en cada una de las otras ciudades. Como Bash quiere sorprender a sus amigos, decide enviar un Pikachu a cada uno de ellos. Como puede haber algunas ciudades a las que no se puede acceder desde la ciudad de Bash, solo envía un Pikachu a aquellos amigos que viven en una ciudad a la que se puede acceder desde su propia ciudad. También quiere enviárselo lo antes posible.
+Es el cambio de año, por lo que Bash quiere enviar regalos a sus amigos. Hay $n$ ciudades en la región del Himalayan y están conectadas por $m$ carreteras bidireccionales. Bash vive en la ciudad $s$. Bash tiene exactamente un amigo en cada una de las otras ciudades. Como Bash quiere sorprender a sus amigos, decide enviar un Pikachu a cada uno de ellos. Como puede haber algunas ciudades a las que no se puede acceder desde la ciudad de Bash, sólo envía un Pikachu a aquellos amigos que viven en una ciudad a la que se puede acceder desde su propia ciudad. También quiere enviárselo lo antes posible.
 
 \nl
 
@@ -643,7 +649,7 @@ Tenga en cuenta que si se destruye una ciudad, todas las carreteras conectadas d
 
 \nl
 
-Tenga en cuenta que solo los amigos que están esperando un regalo cuentan como infelices, incluso si mueren.
+Tenga en cuenta que sólo los amigos que están esperando un regalo cuentan como infelices, incluso si mueren.
 
 \nl
 
@@ -663,7 +669,7 @@ Se garantiza que ninguna carretera conecta una ciudad con sí misma y que no hay
 
 \nl
 
-\textbf{Salida:} Imprime un solo entero, la respuesta al problema.
+\textbf{Salida:} Imprime un sólo entero, la respuesta al problema.
 
 \nl
 
@@ -684,7 +690,7 @@ Se garantiza que ninguna carretera conecta una ciudad con sí misma y que no hay
 
 \textbf{Ejemplo de Salida 1:} $2$
 
-\nl
+\newpage
 
 \textbf{Ejemplo de Entrada 2:}
 
@@ -728,7 +734,7 @@ Ahora, analicemos qué significa la función $f(s, x)$. Será igual al número d
 
 En otras palabras, queremos encontrar el número de vértices $u$ dominados por el vértice $x$ considerando $s$ como el vértice de fuente del DAG de los caminos más cortos. Esto se puede calcular construyendo el árbol dominador de DAG de los caminos más cortos considerando a $s$ como el vértice fuente.\cite{afaffd}
 
-\nl
+\newpage
 
 Se dice que un vértice $u$ domina un vértice con el vértice de origen $s$ si todas los caminos de $s$ a $w$ en el grafo deben pasar a través del nodo $u$.
 
@@ -743,6 +749,88 @@ Una vez que se forma el árbol dominador, la respuesta para cualquier nodo $x$ e
 \nl
 
 \textbf{Fuente:} \href{https://codeforces.com/contest/757/problem/F}{codeforces.com/contest/757/problem/F}
+
+\subsection{Camino más corto especial}
+
+\nl
+
+\subsubsection{Descripción}
+
+\nl
+
+Dado un grafo $G = (V, E)$ no dirigido y ponderado, con función de peso $w: E \rightarrow R $ se necesita encontrar el camino más corto en el grafo desde un vértice fuente hasta un destino que cumpla la siguiente propiedad.
+
+$$ w(e_1) > w(e_2) < w(e_3) > w(e_4) \ ...$$
+
+donde $e_1 \rightarrow e_2 \rightarrow e_3 \rightarrow e_4 \ ... $ son los vértices del camino más corto.
+
+\nl
+
+Formalmente, la diferencia entre los pesos de las aristas adyacentes en el camino más corto debe ir cambiando de positivo a negativo y viceversa. Y la primera diferencia debe ser positiva.
+
+\nl
+
+\textbf{Entrada:} Primera línea contiene $T$, el número de casos de prueba. La primera línea de cada caso de prueba contiene $N$ el número de vértices y $M$ el número de aristas. Siguen las siguientes $M$ líneas, cada línea contiene $3$ enteros $X$, $Y$ y $Z$, lo que indica que hay una arista de $X$ a $Y$ con peso $Z$. La siguiente línea contiene $2$ enteros: el vértice fuente y el de destino.
+
+\nl
+
+\textbf{Salida:} Para cada caso de prueba, imprima el camino más corto que satisfaga la propiedad. Si no existe tal camino, imprima "No Solution".
+
+\newpage
+
+\subsubsection{Solución}
+
+Dividiremos el problema en varios subproblemas:
+
+\nl
+
+\textbf{Primer subproblema:} Dado un grafo, necesitamos encontrar el camino más corto en el grafo desde una fuente al destino, sin ninguna condición. Este problema podemos resolverlo utilizando el algoritmo de Dijkstra.
+
+\nl
+
+\textbf{Segundo subproblema:} Dado un grafo, necesitamos encontrar el camino más corto en la grafo de la fuente al destino tal que satisfaga la siguiente propiedad: $w(e_1) > w(e_2) < w(e_3) > w(e_4) \ ...$ y así sucesivamente.
+
+\nl
+
+En el subproblema 1, mantenemos una array de visitados. Una vez que se ha visitado un vértice, obtenemos el camino más corto para ese vértice en particular y no es necesario volver a visitar el mismo vértice. Podemos hacerlo de una manera diferente, en el momento en que estamos explorando el vértice $v$, e insertando a todos los vecinos de $v$ en la cola de prioridad, podemos eliminar todas las aristas vecinas del vértice $v$ justo después de insertarlos en la cola de prioridad.
+
+\nl
+
+Entonces, para resolver el subproblema 2, consideremos que hemos llegado al vértice $V$ por una arista que tiene un peso $W$. Al eliminar el vértice $V$ de la cola de prioridad, insertemos todas las $X$ adyacentes de $V$ si $W_{VX} > W$, y eliminemos todas esas aristas de las lista de aristas. Este algoritmo garantiza que cada arista se procese como máximo una vez. Por lo tanto, el algoritmo terminará. Podemos visitar un vértice más de una vez.
+
+\nl
+
+La prueba de corrección del algoritmo dado se puede entender de la siguiente manera. Si llegamos al vértice $V$ con el costo $C_1$, y luego llegamos al mismo vértice con el costo $C_2$, entonces $C_1 < C_2$, el costo de la última arista explorado en ambos casos es el mismo.
+
+\nl
+
+\textbf{Detalles de la implementación:} Preprocesemos la gráfica clasificando las aristas salientes de cada vértice (por peso). Mantengamos un puntero en cada vértice, lo que indicará que las aristas que tienen mayor peso no deben considerarse.
+
+\nl
+
+\textbf{Problema original:} Para resolver el problema original, donde la longitud de la arista aumenta o disminuye alternativamente. Necesitamos hacer algunos cambios en el segundo subproblema. Mantendremos dos copias del grafo como la lista de aristas, (llamemosle $G_L$ y $G_S$. Se debe mantener un $counter$, $event counter$ denotará que estamos buscando una arista más pequeña y un $odd counter$ que dirá que estamos buscando una arista más grande que la anterior. Mientras buscamos arista más grandes, eliminaremos esas aristas más grandes después de insertarlas en la cola de prioridad. Esta eliminación ocurrirá solo en la copia más grande del grafo que es la lista de arista $G_L$, y de manera similar en otro caso.
+
+\nl
+
+La razón para mantener dos copias del grafo es que si la arista $e$ se ha tomado y es más grande que el anterior, luego se puede considerar nuevamente (como más corta que la última).
+
+\begin{center}
+	\includegraphics[width=10cm]{images/image1.png}
+\end{center}
+
+Ahora veamos la razón de mantener dos copias del grafo, la arista que tiene una longitud $10$ se considera dos veces. Durante la ejecución del algoritmo, primero se eliminará de la copia más pequeña del grafo, es decir, $G_S$ (mientras se recorre desde la longitud $200$ a $10$), y luego se eliminará de la copia más grande del grafo, es decir, $G_L$ (mientras se recorre para la longitud $8$ a $10$).
+
+\nl
+
+Como la eliminación puede ser costosa o puede tener una complejidad lineal, podemos mantener contadores que indicarán el rango en el que se debe considerar la lista de aristas. La complejidad temporal del enfoque anterior será $O(E * \log{E} + E * \log{V})$, $O(E \log{E})$ aparecerá debido a la lista de aristas de clasificación, y $O(E * \log{V})$ debido a Dijkstra.
+
+\nl
+
+\textbf{Código:} \href{https://gist.github.com/leynier/7b71cb4c6bf7f21e69f444bc60cad478}{gist.github.com/leynier/7b71cb4c6bf7f21e69f444bc60cad478}
+
+\nl
+
+\textbf{Fuente:} \href{https://www.codechef.com/problems/SPSHORT}{www.codechef.com/problems/SPSHORT}
 
 \newpage
 

@@ -61,7 +61,7 @@
 
 \nl
 
-La Criba de Eratóstenes es un algoritmo simple para buscar todos los números primos menores que un numero $n$.
+La Criba de Eratóstenes es un algoritmo simple para buscar todos los números primos menores que un número $n$.
 
 \nl
 
@@ -91,11 +91,11 @@ Este algoritmo produce todos los números primos que no son mayores que $n$. Inc
 
 \nl
 
-El trabajo realizado por este algoritmo es casi en su totalidad las operaciones para eliminar las representaciones de números compuestos que, para la versión básica no optimizada es la suma del rango dividido por cada uno de los números primos hasta ese rango o:
+El trabajo realizado por este algoritmo es casi en su totalidad las operaciones para eliminar o marcar los números compuestos que, para la versión básica no optimizada es la suma del intervalo dividido por cada uno de los números primos hasta ese intervalo:
 
 $$n \sum_{p \leqslant n}\frac{1}{p}$$
 
-donde n es el rango de la criba en este y todos los análisis posteriores.
+donde n es la longitud del intervalo de la criba en este y todos los análisis posteriores.
 
 \nl
 
@@ -103,7 +103,7 @@ Al reorganizar el segundo teorema de Mertens, esto es igual a $n (\log(\log(n)) 
 
 \nl
 
-La optimización de comenzar en el cuadrado de cada primo y solo seleccionar los primos menores que la raíz cuadrada cambia la $n$ en la expresión de arriba para $\sqrt{n}$ y no iterar hasta que el cuadrado signifique que la suma de los primos base cada uno menos dos se resta de las operaciones. Como la suma de los primeros $x$ primos es $\frac{1}{2}x^2\log(x)$\cite{ant} y el teorema del número primo dice que $x \approxeq \frac{x}{\log(x)}$, donde la suma de los primos hasta $n$ es $\frac{n^2}{2 \log(n)}$, y por lo tanto la suma de los primeros primos hasta $\sqrt{n}$ es $\frac{1}{\log(n)}$ expresado como un factor de $n$. El intervalo entre dos primos es $2\pi(\sqrt{n})$, donde $\pi$ es la función para contar primos, o $\sqrt{4\sqrt{n}}$, expresando esto como un factor de $n$ como lo son los otros términos, esto es $\frac{4}{\sqrt{n}\log(n)}$. Combinando todo esto, la expresión para el número de operaciones con las optimizaciones sin la factorización de la rueda es:
+La optimización de comenzar en el cuadrado de cada primo y solo seleccionar los primos menores que la raíz cuadrada cambia la $n$ en la expresión de arriba para $\sqrt{n}$ y no iterar hasta que el cuadrado significa que la suma de los primos base cada uno menos dos se resta de las operaciones. Como la suma de los primeros $x$ primos es $\frac{1}{2}x^2\log(x)$\cite{ant} y el teorema del número primo dice que $x \approxeq \frac{x}{\log(x)}$, donde la suma de los primos hasta $n$ es $\frac{n^2}{2 \log(n)}$, y por lo tanto la suma de los primeros primos hasta $\sqrt{n}$ es $\frac{1}{\log(n)}$ expresado como un factor de $n$. El intervalo entre dos primos es $2\pi(\sqrt{n})$, donde $\pi$ es la función para contar primos, o $\sqrt{4\sqrt{n}}$, expresando esto como un factor de $n$ como lo son los otros términos, esto es $\frac{4}{\sqrt{n}\log(n)}$. Combinando todo esto, la expresión para el número de operaciones con las optimizaciones sin la factorización de la rueda es:
 
 $$\log(\log(n)) - \frac{1}{\log(n)} \left(1  -\frac{4}{\sqrt{n}}\right) + M - \log(2)$$
 
@@ -127,7 +127,7 @@ Combinando todo el análisis anterior, el número total de operaciones para una 
 
 $$ \prod_{p \leqslant x}\frac{p - 1}{p} \left( \log(\log(n)) - \frac{1}{\log(n)} \left(1  -\frac{4}{\sqrt{n}}\right) + M - \log(2) - \sum_{p \leqslant x}\frac{1}{p} \right) $$
 
-Para mostrar que la expresión anterior es una buena aproximación al número de operaciones para eliminar los números compuestos realizadas por el algoritmo, a continuación se muestra una tabla que muestra el número de operaciones realmente medido para una implementación práctica de la criba de Eratóstenes en comparación con el número de operaciones predice a partir de la expresión anterior, tanto expresados como una fracción del rango (redondeado a cuatro lugares decimales) para diferentes rangos de la criba y factorizaciones de rueda (tenga en cuenta que la última columna es una rueda práctica máxima en cuanto al tamaño de los huecos de las ruedas) - casi 10 millones de valores):
+Para mostrar que la expresión anterior es una buena aproximación al número de operaciones para eliminar los números compuestos realizadas por el algoritmo, a continuación se muestra una tabla que muestra el número de operaciones realmente medido para una implementación práctica de la criba de Eratóstenes en comparación con el número de operaciones que se predice a partir de la expresión anterior, tanto expresados como una fracción del intervalo (redondeado a cuatro lugares decimales) para diferentes intervalos de la criba y factorizaciones de rueda (tenga en cuenta que la última columna es una rueda práctica máxima en cuanto al tamaño de los huecos de las ruedas) - casi 10 millones de valores):
 
 \begin{center}
 	\includegraphics[width=10cm]{images/table1.png}
@@ -137,7 +137,7 @@ La tabla anterior muestra que la expresión anterior es una muy buena aproximaci
 
 \nl
 
-La criba de Eratóstenes es una forma popular de comparar el rendimiento de las computadoras. \cite{ompts} Como se puede ver de lo anterior al eliminar todas las operaciones constantes y los factores constantes e ignorar los términos que tienden a cero a medida que $n$ se acerca al infinito, la complejidad del tiempo para calcular todos los primos menores que $n$ en el modelo de máquina de acceso aleatorio es $O(n\log(\log(n)))$ operaciones, una consecuencia directa del hecho de que la serie armónica principal se aproxima asintóticamente a $\log(\log(n))$. Sin embargo, tiene una complejidad de tiempo exponencial con respecto al tamaño de entrada, lo que lo convierte en un algoritmo pseudo-polinómico. El algoritmo básico requiere $O(n)$ de memoria.
+La criba de Eratóstenes es una forma popular de comparar el rendimiento de las computadoras. \cite{ompts} Como se puede ver de lo anterior al eliminar todas las operaciones constantes y los factores constantes e ignorar los términos que tienden a cero a medida que $n$ se acerca al infinito, la complejidad temporal para calcular todos los primos menores que $n$ en el modelo de máquina de acceso aleatorio es $O(n\log(\log(n)))$ operaciones, una consecuencia directa del hecho de que la serie armónica principal se aproxima asintóticamente a $\log(\log(n))$. Sin embargo, tiene una complejidad de tiempo exponencial con respecto al tamaño de entrada, lo que lo convierte en un algoritmo pseudo-polinómico. El algoritmo básico requiere $O(n)$ de memoria.
 
 \nl
 
@@ -149,25 +149,25 @@ La complejidad basada en bits del algoritmo es $O(n(\log(n)) (\log(\log(n))))$ o
 
 \nl
 
-Como señala Jon Sorenson, el problema con la criba de Eratóstenes no es el número de operaciones que realiza, sino sus requisitos de memoria.\cite{aipns} Para $n$ grande, el rango de números primos puede no caber en la memoria. Peor aún, incluso para $n$ no tan grandes, su uso de caché es altamente subóptimo. El algoritmo recorre todo el array, sin mostrar casi ninguna localidad de referencia.
+Como señala Jon Sorenson, el problema con la criba de Eratóstenes no es el número de operaciones que realiza, sino sus requisitos de memoria.\cite{aipns} Para $n$ grande, el intervalo de números primos puede no caber en la memoria. Peor aún, incluso para $n$ no tan grandes, su uso de caché es altamente subóptimo. El algoritmo recorre todo el array, sin mostrar casi ninguna localidad de referencia.
 
 \newpage
 
-Las cribas segmentadas ofrecen una solución a estos problemas, donde solo se computa partes del rango a la vez.\cite{pnap} Se conocen desde la década de 1970 y funcionan de la siguiente manera:\cite{aipns}\cite{ssepap}
+Las cribas segmentadas ofrecen una solución a estos problemas, donde solo se computa partes del intervalo a la vez.\cite{pnap} Se conocen desde la década de 1970 y funcionan de la siguiente manera:\cite{aipns}\cite{ssepap}
 
 \subsection{Descripción}
 
 \nl
 
-La idea de una criba segmentada es dividir el rango $[0 .. n-1]$ en diferentes segmentos y calcular los primos en todos los segmentos uno por uno. Este algoritmo primero usa la criba común para encontrar números primos más pequeños o iguales a $\sqrt{n}$. A continuación se presentan los pasos utilizados en la criba segmentada.\cite{gfgss}
+La idea de una criba segmentada es dividir el intervalo $[0 .. n-1]$ en diferentes segmentos y calcular los primos en todos los segmentos uno por uno. Este algoritmo primero usa la criba común para encontrar números primos más pequeños o iguales a $\sqrt{n}$. A continuación se presentan los pasos utilizados en la criba segmentada.\cite{gfgss}
 
 \begin{enumerate}
 	\item Use una criba común para encontrar todos los números primos hasta $\sqrt{n}$ y almacene estos números primos en una lista.
-	\item Necesitamos todos los números primos en el rango $[0..n-1]$. Dividimos este rango en diferentes segmentos, de manera que el tamaño de cada segmento es como máximo $\sqrt{n}$.
+	\item Necesitamos todos los números primos en el intervalo $[0..n-1]$. Dividimos este intervalo en diferentes segmentos, de manera que el tamaño de cada segmento es como máximo $\sqrt{n}$.
 	\item Hacer lo siguiente para cada segmento $[comienzo ... final]$.
 	\begin{itemize}
-		\item Crear un array de tamaño $final - comienzo + 1$. Aquí solo necesitamos $O(x)$ espacio donde $x$ es el número de elementos en un rango dado.
-		\item Iterar a través de todos los números primos encontrados en el paso $1$. Para cada número primo, marque sus múltiplos en el rango dado $[comienzo ... final]$.
+		\item Crear un array de tamaño $final - comienzo + 1$. Aquí solo necesitamos $O(x)$ espacio donde $x$ es el número de elementos en un intervalo dado.
+		\item Iterar a través de todos los números primos encontrados en el paso $1$. Para cada número primo, marque sus múltiplos en el intervalo dado $[comienzo ... final]$.
 	\end{itemize}
 \end{enumerate}
 
@@ -189,7 +189,7 @@ La versión de la criba segmentada tiene la misma complejidad temporal de $O(n \
 
 \subsubsection{Descripción}
 
-Los números casi primos son los números no primos que son divisibles por un solo número primo. En este problema, su trabajo consiste en escribir un programa que encuentre la cantidad de números casi primos dentro de un cierto rango.
+Los números casi primos son los números no primos que son divisibles por un solo número primo. En este problema, su trabajo consiste en escribir un programa que encuentre la cantidad de números casi primos dentro de un cierto intervalo.
 
 \nl
 
@@ -197,7 +197,7 @@ Los números casi primos son los números no primos que son divisibles por un so
 
 \nl
 
-\textbf{Salida:} Para cada línea de entrada, excepto la primera línea, debe producir una línea de salida. Esta línea contiene un solo entero, que indica cuántos números casi primos están dentro del rango (inclusivo) $[bajo ... alto]$.
+\textbf{Salida:} Para cada línea de entrada, excepto la primera línea, debe producir una línea de salida. Esta línea contiene un solo entero, que indica cuántos números casi primos están dentro del intervalo (inclusivo) $[bajo ... alto]$.
 
 \nl
 
@@ -230,11 +230,11 @@ Los números casi primos son los números no primos que son divisibles por un so
 
 \subsubsection{Solución}
 
-\textbf{Primera idea fallida:} Utilizar un array de $int$ inicializados en $0$ en vez de un array de $bool$. Los primos quedarían con el valor $0$ y para los compuestos en vez de marcarlos como $false$, aumentar el valor en el array. Al final del proceso de la criba quedaría en el array para la posición i-ésima la cantidad de divisores primos del número $i$ a menos que $i$ sea primo que en este caso sería el valor $0$. Luego hacer una tabla acumulativa con los valores del array iguales a $1$ ya que estos son los únicos números divisibles por un único primo y que no son primos. El problema que tiene esta idea es que el rango es hasta $10^{12}$ y necesitariamos un array de esta longitud, lo cual no es posible.
+\textbf{Primera idea fallida:} Utilizar un array de $int$ inicializados en $0$ en vez de un array de $bool$. Los primos quedarían con el valor $0$ y para los compuestos en vez de marcarlos como $false$, aumentar el valor en el array. Al final del proceso de la criba quedaría en el array para la posición i-ésima la cantidad de divisores primos del número $i$ a menos que $i$ sea primo que en este caso sería el valor $0$. Luego hacer una tabla acumulativa con los valores del array iguales a $1$ ya que estos son los únicos números divisibles por un único primo y que no son primos. El problema que tiene esta idea es que el intervalo es hasta $10^{12}$ y necesitariamos un array de esta longitud, lo cual no es posible.
 
 \nl
 
-\textbf{Idea correcta:} Calcular los primos hasta $10^6$ y guardarlos en una lista. Luego en esta lista ir haciendo búsquedas binarias para los valores de las raíces del limite inferior y superior e ir acumulando la diferencia del resultado de las búsquedas hasta que la raíz del limite superior sea menor que $2$.
+\textbf{Idea correcta:} Calcular los primos hasta $10^6$ y guardarlos en una lista. Luego en esta lista ir haciendo búsquedas binarias para los valores de las raíces del límite inferior y superior e ir acumulando la diferencia del resultado de las búsquedas hasta que la raíz del límite superior sea menor que $2$.
 
 \nl
 
@@ -274,7 +274,7 @@ donde $a$ y $b$ son enteros positivos arbitrarios.
 
 \nl
 
-Ahora, los niños decidieron averiguar cuántos días del intervalo $[l, r]$ $(l \leqslant r)$ son adecuados para la programación de pares. Decidieron que el día $i$ $(l \leqslant i \leqslant)$ es adecuado para la programación de pares si y solo si el número $i$ es afortunado para Peter y para Bob al mismo tiempo. Ayuda a los chicos a encontrar el número de esos días.
+Ahora, los niños decidieron averiguar cuántos días del intervalo $[l, r]$ $(l \leqslant r)$ son adecuados para la programación de pares. Decidieron que el día $i$ $(l \leqslant i \leqslant)$ es adecuado para la programación de pares si y sólo si el número $i$ es afortunado para Peter y para Bob al mismo tiempo. Ayuda a los chicos a encontrar el número de esos días.
 
 \nl
 
@@ -368,11 +368,11 @@ Supongamos que ya hemos calculado $f(2)$, $f(3)$, $...$, $f(r)$. Entonces, calcu
 
 \nl
 
-Considere el proceso de cálculo de $f(x)$. Supongamos que encontramos una respuesta óptima. Represente esta respuesta como una secuencia de números enteros $d_1, d_2, ..., d_k$: en la primera etapa dividiremos a las niñas en grupos de participantes de $d_1$, en la segunda etapa en grupos de participantes de $d_2$ y así sucesivamente. Probemos que todos los $d_i$ deben ser primos.
+Consideremos el proceso de cálculo de $f(x)$. Supongamos que encontramos una respuesta óptima. Representemos esta respuesta como una secuencia de números enteros $d_1, d_2, ..., d_k$: en la primera etapa dividiremos a las niñas en grupos de participantes de $d_1$, en la segunda etapa en grupos de participantes de $d_2$ y así sucesivamente. Probemos que todos los $d_i$ deben ser primos.
 
 \nl
 
-Supongamos que algunos $d_i$ es un número compuesto. Luego se puede descomponer en dos números $d_i = a * b$. Además, sea $n$ el número de chicas que son admitidas en la i-ésima etapa. Luego en la actual i-ésima etapa ocurrirán $ \frac{n}{d_i} * \frac{d_i(d_i - 1)}{2} =  \frac{n(d_i - 1)}{2}$ comparaciones. Pero si dividimos esta etapa en dos nuevas etapas, entonces el número de comparaciones es $ \frac{n(a-1)}{2} + \frac{n(b - 1)}{2a} \leqslant \frac{n(a-1)}{2} + \frac{n(b-1)}{2} \leqslant \frac{n(a+b-2)}{2} \leqslant \frac{n(ab - 1)}{2} = \frac{n(d_i - 1)}{2}$. Por lo tanto, hemos demostrado que todos los $d_i$ deben ser primos. Entonces es fácil escribir una dinámica, que se calculará mediante la transición del estado a los estados dados al dividir el estado actual entre los divisores primos. Para resolver esta tarea podemos utilizar la criba de Eratóstenes.
+Supongamos que algún $d_i$ es un número compuesto. Luego lo podemos descomponer en dos números $d_i = a * b$. Además, sea $n$ el número de chicas que son admitidas en la i-ésima etapa. Luego en la actual i-ésima etapa ocurrirán $ \frac{n}{d_i} * \frac{d_i(d_i - 1)}{2} =  \frac{n(d_i - 1)}{2}$ comparaciones. Pero si dividimos esta etapa en dos nuevas etapas, entonces el número de comparaciones es $ \frac{n(a-1)}{2} + \frac{n(b - 1)}{2a} \leqslant \frac{n(a-1)}{2} + \frac{n(b-1)}{2} \leqslant \frac{n(a+b-2)}{2} \leqslant \frac{n(ab - 1)}{2} = \frac{n(d_i - 1)}{2}$. Por lo tanto, hemos demostrado que todos los $d_i$ deben ser primos. Entonces es fácil escribir una dinámica, que se calculará mediante la transición del estado a los estados dados al dividir el estado actual entre los divisores primos. Para resolver esta tarea podemos utilizar la criba de Eratóstenes.
 
 \nl
 

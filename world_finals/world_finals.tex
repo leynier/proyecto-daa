@@ -155,15 +155,15 @@ Muestra el resultado después de aplicar el algoritmo de Dr. Sprinkler al texto 
 
 \subsection{Solución}
 
-La observación que se debe hacer aquí es que el problema se puede convertir en un problema de grafo. Crearemos dos vértices para cada palabra distinta en la entrada, uno que representa el comienzo de esa palabra y otro que representa el final. Conectamos el principio de la palabra $b$ con el final de la palabra $a$ si $a$ sigue inmediatamente a $b$ en cualquier oración del texto, lo que implica que si obtenemos una coma antes de $b$ en cualquier lugar del texto, también la colocaremos entre $a$ y $b$, y esto significa que pondremos una coma después de una en todas partes del texto (y viceversa).
+La observación que se debe hacer aquí es que el problema se puede convertir en un problema de grafo. Crearemos dos vértices para cada palabra distinta en la entrada, uno que representa el comienzo de esa palabra y otro que representa el final. Conectamos el principio de la palabra $b$ con el final de la palabra $a$ si $a$ sigue inmediatamente a $b$ en cualquier oración del texto, lo que implica que si obtenemos una coma antes de $b$ en cualquier lugar del texto, también la colocaremos entre $a$ y $b$, y esto significa que pondremos una coma después de una $a$ en todas partes del texto (y viceversa).
 
 \nl
 
-Esto significa que si en la entrada original hay una coma después de alguna palabra $a$, y hay un camino desde $(a, fin)$ a $(c, fin)$ en la gráfica para algunos $c$, entonces también pondremos una coma después de cada aparición de $c$ en el texto después de suficiente aplicación de reglas. Por lo tanto, el problema es encontrar las componentes conexas en este grafo. Esto es factible con una aplicación de cualquier algoritmo de recorrido de grafos.
+Esto significa que si en la entrada original hay una coma después de alguna palabra $a$, y hay un camino desde $(a, fin)$ a $(c, fin)$ en la gráfica para algunos $c$, entonces también pondremos una coma después de cada aparición de $c$ en el texto y aplicaremos las reglas hasta que sea suficiente Por lo tanto, el problema es encontrar las componentes conexas en este grafo. Esto es factible con una aplicación de cualquier algoritmo de recorrido de grafos.
 
 \nl
 
-Así, comenzamos repasando el texto y construyendo el grafo. Podemos almacenar las palabras en una estructura de diccionario (como un mapa de C++), y para cada palabra en el texto, colóquela o actualícela en el diccionario, si hay una coma después, marque eso en el diccionario, y si no está seguido de un punto, marque la siguiente palabra como adyacente en el diccionario. En una sola pasada obtenemos suficiente información para construir el grafo. Ahora, colocamos los $(a, final)$ vértices en la cola de “visitar” y ejecutamos, digamos, el BFS, y finalmente reconstruimos el texto, poniendo una coma después de cada palabra no seguida por un período durante el cual $(a, final)$ ha sido visitada por la búsqueda.
+Así, comenzamos repasando el texto y construyendo el grafo. Podemos almacenar las palabras en una estructura de diccionario (como un mapa de C++), y para cada palabra en el texto, colocarla y actualizarla en el diccionario, si hay una coma después, marque eso en el diccionario, y si no está seguido de un punto, marcar la siguiente palabra como adyacente en el diccionario. En una sola pasada obtenemos suficiente información para construir el grafo. Ahora, colocamos los $(a, final)$ vértices en la cola de “visitar” y ejecutamos, digamos, el BFS, y finalmente reconstruimos el texto, poniendo una coma después de cada palabra no seguida por un período durante el cual $(a, final)$ ha sido visitada por la búsqueda.
 
 \nl
 
@@ -185,7 +185,7 @@ intencionalmente borrosa para hacer los ríos más visibles).
 \end{center}
 
 La célebre autoridad fluvial Flo Ng quiere que su nuevo libro sobre los ríos del mundo incluya los más largos ríos tipográficos posibles. Ella planea establecer el texto en una fuente mono-espaciada (todas las letras y espacios tienen ancho igual) en una columna alineada a la izquierda de un ancho fijo, con exactamente un espacio separando palabras en
-Cada línea (el texto no está alineado a la derecha). Para Flo, un “río” se define como una secuencia de espacios que se encuentran en líneas consecutivas en las que la posición de cada espacio en la secuencia (excepto la primera) difiere en al más 1 de la posición del espacio en la línea por encima de él. El espacio en blanco que se arrastra no puede aparecer en un río. Las palabras deben estar empaquetadas lo más apretadamente posible en las líneas; no se pueden dividir palabras en líneas. El ancho de linea utilizado debe ser al menos tan largo como la palabra más larga en el texto. Por ejemplo, la figura de abajo muestra el mismo conjunto de texto con dos anchos de línea diferentes.
+Cada línea (el texto no está alineado a la derecha). Para Flo, un “río” se define como una secuencia de espacios que se encuentran en líneas consecutivas en las que la posición de cada espacio en la secuencia (excepto la primera) difiere en al más 1 de la posición del espacio en la línea por encima de él. El espacio en blanco que se arrastra no puede aparecer en un río. Las palabras deben estar empaquetadas lo más apretadamente posible en las líneas; no se pueden dividir palabras en líneas. El ancho de línea utilizado debe ser al menos tan largo como la palabra más larga en el texto. Por ejemplo, la figura de abajo muestra el mismo conjunto de texto con dos anchos de línea diferentes.
 
 \begin{center}
 	\includegraphics[width=8cm]{images/image2.png}
@@ -207,7 +207,7 @@ Muestra el ancho de línea para el cual el texto de entrada contiene el río má
 
 \subsection{Solución}
 
-Para dar una solución a este problema, se puede probar que para todas las longitudes de linea máximas, cual seria la que tuviese el rió de mayor longitud. Se podría realizar empezando desde la longitud mínima, o sea, la longitud de la palabra más larga del texto, y por cada palabra conocer si en el línea anterior existe un río y el tamaño de este; hasta que el la longitud de la línea sea muy grande, de modo que todo el texto cupiese en una única linea y por tanto todos los ríos tuviesen longitud $1$. El límite del ejercicio en cuanto a tiempo es muy holgado, así que con una búsqueda optimizada o podándola se puede resolver el problema de una forma seguro para el tiempo que se le ha otorgado. 
+Para dar una solución a este problema, se puede probar que para todas las longitudes de líneas máximas, cual seria la que tuviese el rió de mayor longitud. Se podría realizar empezando desde la longitud mínima, o sea, la longitud de la palabra más larga del texto, y por cada palabra conocer si en el línea anterior existe un río y el tamaño de este; hasta que la longitud de la línea sea muy grande, de modo que todo el texto cupiese en una única línea y por tanto todos los ríos tuviesen longitud $1$. El límite del ejercicio en cuanto a tiempo es muy holgado, así que con una búsqueda optimizada o podándola se puede resolver el problema de una forma segura para el tiempo que se le ha otorgado. 
 
 \nl
 
